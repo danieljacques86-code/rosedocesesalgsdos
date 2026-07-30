@@ -1,513 +1,913 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rose Doces e Salgados</title>
+  <style>
+    :root {
+      --primary: #c1121f;
+      --primary-dark: #9b0d18;
+      --secondary: #ffb703;
+      --accent: #ff7ab6;
+      --success: #0f9d58;
+      --success-dark: #0b7d45;
+      --bg: #fff8fb;
+      --surface: #ffffff;
+      --text: #2b2b2b;
+      --muted: #6b7280;
+      --border: #ececec;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      --radius: 22px;
+      --radius-sm: 14px;
+      --container: 1200px;
+    }
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    * {
+      box-sizing: border-box;
+    }
 
-<title>Rose Doces e Salgados</title>
+    html {
+      scroll-behavior: smooth;
+    }
 
-<style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #fff7fa 0%, #fffdf8 100%);
+      color: var(--text);
+    }
 
-body{
-margin:0;
-font-family:Arial;
-background:#fff5f8;
-}
+    img {
+      max-width: 100%;
+      display: block;
+    }
 
-header{
-background:linear-gradient(45deg,#d90429,#ffbe0b,#ff69b4);
-color:white;
-text-align:center;
-padding:20px;
-}
+    button,
+    select,
+    input {
+      font: inherit;
+    }
 
-.logo{
-width:150px;
-height:150px;
-border-radius:50%;
-object-fit:cover;
-}
+    .container {
+      width: min(100% - 32px, var(--container));
+      margin: 0 auto;
+    }
 
-.produtos{
-padding:20px;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
-}
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, #e5383b 45%, var(--accent) 100%);
+      color: #fff;
+      padding: 28px 0 36px;
+      box-shadow: var(--shadow);
+    }
 
-.card{
-background:white;
-border-radius:20px;
-padding:15px;
-box-shadow:0 3px 10px #ccc;
-text-align:center;
-}
+    .hero-content {
+      display: grid;
+      grid-template-columns: 120px 1fr auto;
+      gap: 20px;
+      align-items: center;
+    }
 
-.card img{
-width:100%;
-height:220px;
-object-fit:cover;
-border-radius:15px;
-}
+    .logo-badge {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.16);
+      border: 3px solid rgba(255, 255, 255, 0.35);
+      display: grid;
+      place-items: center;
+      font-size: 40px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      backdrop-filter: blur(6px);
+    }
 
-.preco{
-font-size:22px;
-font-weight:bold;
-color:#d90429;
-}
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.1;
+    }
 
-select,input{
-padding:10px;
-width:90%;
-border-radius:10px;
-border:1px solid #ccc;
-margin:5px;
-}
+    .hero p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.92);
+      font-size: 17px;
+    }
 
-button{
-background:#d90429;
-color:white;
-border:0;
-padding:12px;
-border-radius:20px;
-cursor:pointer;
-}
+    .hero-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 210px;
+    }
 
-#carrinhoBox{
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:white;
-overflow:auto;
-z-index:99;
-padding:20px;
-}
+    .btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 13px 18px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+    }
 
-.item{
-display:flex;
-gap:10px;
-border-bottom:1px solid #ddd;
-padding:10px;
-}
+    .btn:hover {
+      transform: translateY(-1px);
+    }
 
-.item img{
-width:80px;
-height:80px;
-border-radius:10px;
-object-fit:cover;
-}
+    .btn:active {
+      transform: translateY(0);
+    }
 
-.total{
-font-size:25px;
-font-weight:bold;
-color:#d90429;
-}
+    .btn-primary {
+      background: #fff;
+      color: var(--primary);
+    }
 
-.pixBox{
-background:#00a86b;
-color:white;
-padding:15px;
-border-radius:15px;
-margin:15px 0;
-}
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.18);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+    }
 
-.whatsapp{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#25d366;
-color:white;
-padding:15px;
-border-radius:30px;
-text-decoration:none;
-}
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 28px 0 12px;
+    }
 
-</style>
+    .section-head h2 {
+      margin: 0;
+      font-size: 28px;
+    }
 
+    .section-head p {
+      margin: 6px 0 0;
+      color: var(--muted);
+    }
+
+    .badge-info {
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 10px 14px;
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      white-space: nowrap;
+      font-size: 14px;
+    }
+
+    .produtos {
+      padding-bottom: 32px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 35px rgba(0, 0, 0, 0.12);
+    }
+
+    .card-media {
+      position: relative;
+      height: 220px;
+      background: #f6f6f6;
+    }
+
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .tag {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--primary);
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .card-body {
+      padding: 18px;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 21px;
+    }
+
+    .card p {
+      margin: 0;
+    }
+
+    .preco {
+      font-size: 25px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 14px;
+    }
+
+    .preco small {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .controls {
+      display: grid;
+      gap: 10px;
+    }
+
+    select,
+    input {
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 14px;
+      border: 1px solid #d8d8d8;
+      background: #fff;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    select:focus,
+    input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(193, 18, 31, 0.12);
+    }
+
+    .btn-add {
+      background: var(--primary);
+      color: #fff;
+      width: 100%;
+    }
+
+    .btn-add:hover {
+      background: var(--primary-dark);
+    }
+
+    .cart-fab,
+    .whatsapp-fab {
+      position: fixed;
+      right: 20px;
+      z-index: 20;
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .cart-fab {
+      bottom: 88px;
+      background: var(--primary);
+      color: #fff;
+      border: 0;
+      padding: 14px 18px;
+    }
+
+    .whatsapp-fab {
+      bottom: 20px;
+      background: #25d366;
+      color: #fff;
+      padding: 14px 18px;
+    }
+
+    .cart-count {
+      min-width: 24px;
+      height: 24px;
+      padding: 0 8px;
+      border-radius: 999px;
+      background: #fff;
+      color: var(--primary);
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .drawer {
+      position: fixed;
+      inset: 0;
+      background: rgba(17, 17, 17, 0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 50;
+    }
+
+    .drawer.open {
+      display: flex;
+    }
+
+    .drawer-panel {
+      width: min(100%, 780px);
+      max-height: 90vh;
+      overflow: hidden;
+      background: #fff;
+      border-radius: 28px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .drawer-header,
+    .drawer-footer {
+      padding: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .drawer-footer {
+      border-bottom: 0;
+      border-top: 1px solid var(--border);
+      display: grid;
+      gap: 14px;
+    }
+
+    .drawer-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .drawer-header h2 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .drawer-close {
+      background: #f3f4f6;
+      color: #111;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 0;
+      cursor: pointer;
+      font-size: 22px;
+    }
+
+    .drawer-body {
+      padding: 20px;
+      overflow: auto;
+      background: #fffdfd;
+    }
+
+    .lista-vazia {
+      text-align: center;
+      color: var(--muted);
+      padding: 30px 10px;
+      border: 1px dashed #dadada;
+      border-radius: 18px;
+      background: #fff;
+    }
+
+    .item {
+      display: grid;
+      grid-template-columns: 88px 1fr auto;
+      gap: 14px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .item img {
+      width: 88px;
+      height: 88px;
+      object-fit: cover;
+      border-radius: 14px;
+    }
+
+    .item-info b {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 6px;
+    }
+
+    .item-info span {
+      display: block;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .item-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .subtotal {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .btn-remove {
+      background: #fff1f2;
+      color: var(--primary);
+      padding: 10px 14px;
+    }
+
+    .resumo {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .total {
+      font-size: 30px;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .pix-box {
+      background: linear-gradient(135deg, var(--success) 0%, #21bf73 100%);
+      color: #fff;
+      padding: 18px;
+      border-radius: 20px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .pix-box h3,
+    .pix-box p,
+    .pix-box h4 {
+      margin: 0;
+    }
+
+    .pix-key {
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      word-break: break-word;
+    }
+
+    .btn-pix {
+      background: #fff;
+      color: var(--success-dark);
+      justify-self: start;
+    }
+
+    .footer-actions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .btn-outline {
+      background: #fff;
+      color: var(--primary);
+      border: 1px solid rgba(193, 18, 31, 0.25);
+    }
+
+    .btn-whats {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-whats:hover {
+      background: var(--primary-dark);
+    }
+
+    .toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-15px);
+      background: #111827;
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      z-index: 100;
+      text-align: center;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 860px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .logo-badge {
+        margin: 0 auto;
+      }
+
+      .hero-actions {
+        min-width: auto;
+      }
+
+      .section-head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .item {
+        grid-template-columns: 1fr;
+      }
+
+      .item img {
+        width: 100%;
+        height: 180px;
+      }
+
+      .item-actions {
+        align-items: stretch;
+      }
+
+      .footer-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .cart-fab,
+      .whatsapp-fab {
+        right: 14px;
+      }
+
+      .cart-fab {
+        bottom: 82px;
+      }
+    }
+  </style>
 </head>
-
 <body>
-
-<header>
-
-<img class="logo" src="https://via.placeholder.com/300">
-
-<h1>🌹 Rose Doces e Salgados</h1>
-
-<p>Encomendas e Delivery</p>
-
-</header>
-
-
-<section class="produtos" id="produtos"></section>
-
-
-<button onclick="abrirCarrinho()">
-🛒 Ver Carrinho
-</button>
-
-
-<div id="carrinhoBox">
-
-<h2>🛒 Seu Pedido</h2>
-
-<div id="lista"></div>
-
-
-<p class="total">
-Total R$ <span id="total">0</span>
-</p>
-
-
-<div class="pixBox">
-
-<h3>💚 Pagamento PIX</h3>
-
-<p>Chave PIX:</p>
-
-<h2>47999117547</h2>
-
-<button onclick="copiarPix()" style="background:white;color:#00a86b;">
-📋 Copiar PIX
-</button>
-
-<p>Após pagar finalize pelo WhatsApp.</p>
-
-</div>
-
-
-<input id="cliente" placeholder="Digite seu nome">
-
-<br>
-
-<button onclick="enviarWhats()">
-Finalizar Compra WhatsApp
-</button>
-
-
-<button onclick="fecharCarrinho()">
-Continuar Comprando
-</button>
-
-
-</div>
-
-
-<a class="whatsapp" href="https://wa.me/47999117547">
-📲 Fale conosco
-</a>
-<script>
-
-let carrinho=[];
-
-let produtos=[
-
-{
-nome:"Coxinha",
-valor:0.85,
-img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtmGiJ6ZyI3fWSw_fWL4oEoW1FYQtymCbBARuLQ3ko6Q&s=10",
-qtd:true
-},
-
-{
-nome:"Pastel",
-valor:0.90,
-img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs2p86_PaDbGypNkGgjZDWm1SBVj8fVPUOAUvENgP6hA&s=10",
-qtd:true
-},
-
-{
-nome:"Risoles de carne",
-valor:0.85,
-img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWLI3Pvsvt8ix09Lr9a3ztoCL9HELkMaOJ4bLVlm0wUA&s=10",
-qtd:true
-},
-
-{
-nome:"Risoles de presunto e queijo",
-valor:0.85,
-img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXlM0zeYdDOECGWKe7WFGGX6F6ZcQggdEmJXL5WcXTiQ&s=10",
-qtd:true
-},
-
-{
-nome:"Bolinha de queijo",
-valor:0.90,
-img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsDts9ca3TEpc2zg5obgaaAky-RN5SwjH3m8K2ER_wZg&s=10",
-qtd:true
-},
-
-{
-nome:"Empadinha de frango",
-valor:1.20,
-img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeJktlUUC2EH_OrEQqWBELdbkUnY9j6gvwd_HK9eQJ0w&s=10",
-qtd:true
-},
-
-{
-nome:"Empadão de frango cremoso 2kg",
-valor:130,
-img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFwtN_T9HixrVBtlw-p70GJb1knC-ogaz_jV2O9JsZbw&s=10",
-qtd:false
-},
-
-{
-nome:"Torta brigadeiro branco com chocolate 2kg",
-valor:150,
-img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8VigMyEFqyUOOYoxh_6qK3xDhevv7tUWVzgbbPdeRFA&s=10",
-qtd:false
-}
-
-];
-
-
-let area=document.getElementById("produtos");
-
-
-produtos.forEach((p,i)=>{
-
-
-let op=p.qtd ?
-
-`
-<select id="q${i}">
-<option>25</option>
-<option>50</option>
-<option>75</option>
-<option>100</option>
-<option>150</option>
-<option>200</option>
-<option>300</option>
-</select>
-`
-
-:
-
-`
-<select id="q${i}">
-<option>1</option>
-</select>
-`;
-
-
-area.innerHTML +=
-
-`
-
-<div class="card">
-
-<img src="${p.img}">
-
-<h2>${p.nome}</h2>
-
-<p class="preco">
-R$ ${p.valor.toFixed(2)}
-</p>
-
-${op}
-
-<button onclick="add(${i})">
-Adicionar 🛒
-</button>
-
-</div>
-
-`;
-
-});
-function add(i){
-
-let qtd=parseInt(
-document.getElementById("q"+i).value
-);
-
-carrinho.push({
-
-nome:produtos[i].nome,
-valor:produtos[i].valor,
-qtd:qtd,
-img:produtos[i].img
-
-});
-
-alert("Produto adicionado");
-
-}
-
-
-function abrirCarrinho(){
-
-document.getElementById("carrinhoBox").style.display="block";
-
-mostrar();
-
-}
-
-
-
-function fecharCarrinho(){
-
-document.getElementById("carrinhoBox").style.display="none";
-
-}
-
-
-
-function excluir(i){
-
-carrinho.splice(i,1);
-
-mostrar();
-
-}
-
-
-
-function mostrar(){
-
-let html="";
-
-let total=0;
-
-
-carrinho.forEach((p,i)=>{
-
-
-let subtotal=p.valor*p.qtd;
-
-total+=subtotal;
-
-
-html +=
-
-`
-
-<div class="item">
-
-<img src="${p.img}">
-
-<div>
-
-<b>${p.nome}</b><br>
-
-Quantidade: ${p.qtd}<br>
-
-Subtotal: R$ ${subtotal.toFixed(2)}
-
-<br>
-
-<button onclick="excluir(${i})">
-
-Excluir
-
-</button>
-
-
-</div>
-
-</div>
-
-`;
-
-});
-
-
-document.getElementById("lista").innerHTML=html;
-
-
-document.getElementById("total").innerHTML=
-
-total.toFixed(2);
-
-
-}
-
-
-
-function copiarPix(){
-
-navigator.clipboard.writeText("47999117547");
-
-alert("PIX copiado: 47999117547");
-
-}
-
-
-
-
-function enviarWhats(){
-
-
-let nome=document.getElementById("cliente").value;
-
-
-let texto=
-
-"🌹 Rose Doces e Salgados%0A"+
-
-"Cliente: "+nome+
-
-"%0A%0APedido:%0A";
-
-
-let total=0;
-
-
-
-carrinho.forEach(p=>{
-
-
-let subtotal=p.valor*p.qtd;
-
-
-total+=subtotal;
-
-
-texto +=
-
-"%0A"+p.nome+
-
-"%0AQuantidade: "+p.qtd+
-
-"%0AValor: R$ "+subtotal.toFixed(2)+
-
-"%0A";
-
-
-});
-
-
-
-texto +=
-
-"%0ATOTAL: R$ "+total.toFixed(2)+
-
-"%0A%0A💚 Pagamento PIX"+
-
-"%0AChave PIX: 47999117547";
-
-
-
-window.open(
-
-"https://wa.me/47999117547?text="+texto
-
-);
-
-
-
-}
-
-
-
-</script>
-
-
+  <header class="hero">
+    <div class="container hero-content">
+      <div class="logo-badge" aria-label="Identidade visual da marca">RD</div>
+
+      <div>
+        <h1>🌹 Rose Doces e Salgados</h1>
+        <p>Encomendas e delivery com praticidade, carinho e muito sabor.</p>
+      </div>
+
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="abrirCarrinho()">🛒 Ver carrinho</button>
+        <a class="btn btn-secondary" href="#cardapio" style="text-decoration:none; text-align:center;">🍽️ Ver cardápio</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section-head" id="cardapio">
+      <div>
+        <h2>Nosso cardápio</h2>
+        <p>Selecione os itens, adicione ao carrinho e finalize pelo WhatsApp.</p>
+      </div>
+      <div class="badge-info">Pagamento via PIX disponível</div>
+    </div>
+
+    <section class="produtos" id="produtos"></section>
+  </main>
+
+  <button class="cart-fab" onclick="abrirCarrinho()" aria-label="Abrir carrinho">
+    🛒 Carrinho
+    <span class="cart-count" id="cartCount">0</span>
+  </button>
+
+  <a class="whatsapp-fab" href="https://wa.me/5547999117547" target="_blank" rel="noopener noreferrer" aria-label="Falar no WhatsApp">
+    📲 WhatsApp
+  </a>
+
+  <div class="drawer" id="carrinhoBox" aria-hidden="true">
+    <div class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="tituloCarrinho">
+      <div class="drawer-header">
+        <div class="drawer-header-row">
+          <h2 id="tituloCarrinho">🛒 Seu pedido</h2>
+          <button class="drawer-close" onclick="fecharCarrinho()" aria-label="Fechar carrinho">×</button>
+        </div>
+      </div>
+
+      <div class="drawer-body">
+        <div id="lista"></div>
+      </div>
+
+      <div class="drawer-footer">
+        <div class="resumo">
+          <div>
+            <strong>Total do pedido</strong>
+            <div style="color: var(--muted); font-size: 14px; margin-top: 4px;">Confira os itens antes de finalizar.</div>
+          </div>
+          <div class="total">R$ <span id="total">0,00</span></div>
+        </div>
+
+        <div class="pix-box">
+          <h3>💚 Pagamento via PIX</h3>
+          <p>Chave PIX</p>
+          <div class="pix-key" id="pixKey">47999117547</div>
+          <button class="btn btn-pix" onclick="copiarPix()">📋 Copiar chave PIX</button>
+          <h4>Após o pagamento, finalize seu pedido pelo WhatsApp.</h4>
+        </div>
+
+        <input id="cliente" type="text" placeholder="Digite seu nome para finalizar" />
+
+        <div class="footer-actions">
+          <button class="btn btn-outline" onclick="fecharCarrinho()">Continuar comprando</button>
+          <button class="btn btn-whats" onclick="enviarWhats()">Finalizar no WhatsApp</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const CHAVE_PIX = "47999117547";
+    const WHATSAPP_NUMERO = "5547999117547";
+    const moeda = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL"
+    });
+
+    const produtos = [
+      {
+        nome: "Coxinha",
+        valor: 0.85,
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtmGiJ6ZyI3fWSw_fWL4oEoW1FYQtymCbBARuLQ3ko6Q&s=10",
+        qtd: true,
+        medida: "cento / festa"
+      },
+      {
+        nome: "Pastel",
+        valor: 0.90,
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs2p86_PaDbGypNkGgjZDWm1SBVj8fVPUOAUvENgP6hA&s=10",
+        qtd: true,
+        medida: "cento / festa"
+      },
+      {
+        nome: "Risoles de carne",
+        valor: 0.85,
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWLI3Pvsvt8ix09Lr9a3ztoCL9HELkMaOJ4bLVlm0wUA&s=10",
+        qtd: true,
+        medida: "cento / festa"
+      },
+      {
+        nome: "Risoles de presunto e queijo",
+        valor: 0.85,
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXlM0zeYdDOECGWKe7WFGGX6F6ZcQggdEmJXL5WcXTiQ&s=10",
+        qtd: true,
+        medida: "cento / festa"
+      },
+      {
+        nome: "Bolinha de queijo",
+        valor: 0.90,
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsDts9ca3TEpc2zg5obgaaAky-RN5SwjH3m8K2ER_wZg&s=10",
+        qtd: true,
+        medida: "cento / festa"
+      },
+      {
+        nome: "Empadinha de frango",
+        valor: 1.20,
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeJktlUUC2EH_OrEQqWBELdbkUnY9j6gvwd_HK9eQJ0w&s=10",
+        qtd: true,
+        medida: "cento / festa"
+      },
+      {
+        nome: "Empadão de frango cremoso 2kg",
+        valor: 130,
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFwtN_T9HixrVBtlw-p70GJb1knC-ogaz_jV2O9JsZbw&s=10",
+        qtd: false,
+        medida: "unidade"
+      },
+      {
+        nome: "Torta brigadeiro branco com chocolate 2kg",
+        valor: 150,
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8VigMyEFqyUOOYoxh_6qK3xDhevv7tUWVzgbbPdeRFA&s=10",
+        qtd: false,
+        medida: "unidade"
+      }
+    ];
+
+    const carrinho = [];
+    const area = document.getElementById("produtos");
+    const lista = document.getElementById("lista");
+    const totalEl = document.getElementById("total");
+    const cartCountEl = document.getElementById("cartCount");
+    const carrinhoBox = document.getElementById("carrinhoBox");
+    const toastEl = document.getElementById("toast");
+
+    function mostrarToast(texto) {
+      toastEl.textContent = texto;
+      toastEl.classList.add("show");
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => {
+        toastEl.classList.remove("show");
+      }, 2200);
+    }
+
+    function criarOpcoesQuantidade(item, index) {
+      if (!item.qtd) {
+        return `
+          <select id="q${index}" aria-label="Quantidade de ${item.nome}">
+            <option value="1">1 unidade</option>
+          </select>
+        `;
+      }
+
+      const quantidades = [25, 50, 75, 100, 150, 200, 300];
+      return `
+        <select id="q${index}" aria-label="Quantidade de ${item.nome}">
+          ${quantidades.map(q => `<option value="${q}">${q} unidades</option>`).join("")}
+        </select>
+      `;
+    }
+
+    function renderProdutos() {
+      area.innerHTML = produtos.map((p, i) => `
+        <article class="card">
+          <div class="card-media">
+            <img src="${p.img}" alt="${p.nome}" loading="lazy" />
+            <span class="tag">${p.qtd ? "Salgado" : "Especial"}</span>
+          </div>
+          <div class="card-body">
+            <h3>${p.nome}</h3>
+            <p class="preco">
+              ${moeda.format(p.valor)}
+              <small>Preço por ${p.medida}</small>
+            </p>
+            <div class="controls">
+              ${criarOpcoesQuantidade(p, i)}
+              <button class="btn btn-add" onclick="add(${i})">Adicionar ao carrinho</button>
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function atualizarContador() {
+      const totalItens = carrinho.reduce((acc, item) => acc + item.qtd, 0);
+      cartCountEl.textContent = totalItens;
+    }
+
+    function add(i) {
+      const produto = produtos[i];
+      const qtd = Number(document.getElementById(`q${i}`).value);
+      const existente = carrinho.find(item => item.nome === produto.nome);
+
+      if (existente) {
+        existente.qtd += qtd;
+      } else {
+        carrinho.push({
+          nome: produto.nome,
+          valor: produto.valor,
+          qtd,
+          img: produto.img,
+          medida: produto.medida
+        });
+      }
+
+      atualizarContador();
+      mostrar();
+      mostrarToast(`${produto.nome} adicionado ao carrinho.`);
+    }
+
+    function abrirCarrinho() {
+      carrinhoBox.classList.add("open");
+      carrinhoBox.setAttribute("aria-hidden", "false");
+      mostrar();
+    }
+
+    function fecharCarrinho() {
+      carrinhoBox.classList.remove("open");
+      carrinhoBox.setAttribute("aria-hidden", "true");
+    }
+
+    function excluir(index) {
+      carrinho.splice(index, 1);
+      atualizarContador();
+      mostrar();
+      mostrarToast("Item removido do carrinho.");
+    }
+
+    function mostrar() {
+      if (!carrinho.length) {
+        lista.innerHTML = `
+          <div class="lista-vazia">
+            <h3 style="margin-top:0;">Seu carrinho está vazio</h3>
+            <p>Adicione produtos do cardápio para continuar.</p>
+          </div>
+        `;
+        totalEl.textContent = "0,00";
+        return;
+      }
+
+      let total = 0;
+
+      lista.innerHTML = carrinho.map((p, i) => {
+        const subtotal = p.valor * p.qtd;
+        total += subtotal;
+
+        return `
+          <div class="item">
+            <img src="${p.img}" alt="${p.nome}" />
+            <div class="item-info">
+              <b>${p.nome}</b>
+              <span>Quantidade: ${p.qtd}</span>
+              <span>Preço unitário: ${moeda.format(p.valor)}</span>
+              <span>Subtotal: ${moeda.format(subtotal)}</span>
+            </div>
+            <div class="item-actions">
+              <div class="subtotal">${moeda.format(subtotal)}</div>
+              <button class="btn btn-remove" onclick="excluir(${i})">Excluir</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      totalEl.textContent = total.toLocaleString("pt-BR", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    }
+
+    function copiarPix() {
+      navigator.clipboard.writeText(CHAVE_PIX)
+        .then(() => mostrarToast(`Chave PIX copiada: ${CHAVE_PIX}`))
+        .catch(() => mostrarToast("Não foi possível copiar automaticamente."));
+    }
+
+    function enviarWhats() {
+      const nome = document.getElementById("cliente").value.trim();
+
+      if (!carrinho.length) {
+        mostrarToast("Adicione produtos antes de finalizar.");
+        return;
+      }
+
+      if (!nome) {
+        mostrarToast("Digite seu nome para finalizar o pedido.");
+        document.getElementById("cliente").focus();
+        return;
+      }
+
+      let total = 0;
+      let linhasPedido = "";
+
+      carrinho.forEach((p) => {
+        const subtotal = p.valor * p.qtd;
+        total += subtotal;
+        linhasPedido += `• ${p.nome}%0A`;
+        linhasPedido += `Quantidade: ${p.qtd}%0A`;
+        linhasPedido += `Subtotal: ${moeda.format(subtotal)}%0A%0A`;
+      });
+
+      const texto =
+        `🌹 *Rose Doces e Salgados*%0A` +
+        `Cliente: ${encodeURIComponent(nome)}%0A%0A` +
+        `*Pedido:*%0A${linhasPedido}` +
+        `*TOTAL:* ${encodeURIComponent(moeda.format(total))}%0A%0A` +
+        `💚 Pagamento via PIX%0A` +
+        `Chave PIX: ${CHAVE_PIX}`;
+
+      window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${texto}`, "_blank");
+    }
+
+    carrinhoBox.addEventListener("click", (event) => {
+      if (event.target === carrinhoBox) {
+        fecharCarrinho();
+      }
+    });
+
+    renderProdutos();
+    atualizarContador();
+    mostrar();
+  </script>
 </body>
-
 </html>
-  
