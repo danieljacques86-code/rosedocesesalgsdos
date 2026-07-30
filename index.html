@@ -1,31 +1,68 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Rose Doces e Salgados</title>
 
 <style>
+
 body{
+margin:0;
 font-family:Arial;
 background:#fff5f8;
-margin:0;
 }
 
 header{
-background:#d90429;
+background:linear-gradient(45deg,#d90429,#ffbe0b,#ff69b4);
 color:white;
+text-align:center;
 padding:20px;
+}
+
+.logo{
+width:150px;
+height:150px;
+border-radius:50%;
+object-fit:cover;
+}
+
+.produtos{
+padding:20px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.card{
+background:white;
+border-radius:20px;
+padding:15px;
+box-shadow:0 3px 10px #ccc;
 text-align:center;
 }
 
-.produto{
-background:white;
-margin:15px;
-padding:15px;
+.card img{
+width:100%;
+height:220px;
+object-fit:cover;
+border-radius:15px;
+}
+
+.preco{
+font-size:22px;
+font-weight:bold;
+color:#d90429;
+}
+
+select,input{
+padding:10px;
+width:90%;
 border-radius:10px;
-box-shadow:0 0 8px #ccc;
+border:1px solid #ccc;
+margin:5px;
 }
 
 button{
@@ -33,31 +70,62 @@ background:#d90429;
 color:white;
 border:0;
 padding:12px;
-border-radius:8px;
+border-radius:20px;
 cursor:pointer;
-width:100%;
-margin-top:10px;
 }
 
-#carrinho{
+#carrinhoBox{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
 background:white;
+overflow:auto;
+z-index:99;
 padding:20px;
-margin:15px;
+}
+
+.item{
+display:flex;
+gap:10px;
+border-bottom:1px solid #ddd;
+padding:10px;
+}
+
+.item img{
+width:80px;
+height:80px;
 border-radius:10px;
+object-fit:cover;
 }
 
 .total{
-font-size:22px;
+font-size:25px;
 font-weight:bold;
+color:#d90429;
 }
 
-.pix{
+.pixBox{
 background:#00a86b;
 color:white;
 padding:15px;
-margin:15px;
-border-radius:10px;
+border-radius:15px;
+margin:15px 0;
 }
+
+.whatsapp{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25d366;
+color:white;
+padding:15px;
+border-radius:30px;
+text-decoration:none;
+}
+
 </style>
 
 </head>
@@ -65,111 +133,296 @@ border-radius:10px;
 <body>
 
 <header>
-<h1>🍩 Rose Doces e Salgados</h1>
-<p>Faça seu pedido online</p>
+
+<img class="logo" src="https://via.placeholder.com/300">
+
+<h1>🌹 Rose Doces e Salgados</h1>
+
+<p>Encomendas e Delivery</p>
+
 </header>
 
 
-<div class="produto">
-<h3>Rosquinha Chocolate</h3>
-<p>R$ 7,00</p>
-<button onclick="add('Rosquinha Chocolate',7)">
-Adicionar
+<section class="produtos" id="produtos"></section>
+
+
+<button onclick="abrirCarrinho()">
+🛒 Ver Carrinho
 </button>
-</div>
 
 
-<div class="produto">
-<h3>Coxinha</h3>
-<p>R$ 6,00</p>
-<button onclick="add('Coxinha',6)">
-Adicionar
-</button>
-</div>
-
-
-<div class="produto">
-<h3>Pizza Calabresa</h3>
-<p>R$ 35,00</p>
-<button onclick="add('Pizza Calabresa',35)">
-Adicionar
-</button>
-</div>
-
-
-
-<div id="carrinho">
+<div id="carrinhoBox">
 
 <h2>🛒 Seu Pedido</h2>
 
-<div id="lista">
-Nenhum produto
-</div>
+<div id="lista"></div>
+
 
 <p class="total">
-Total: R$ <span id="total">0</span>
+Total R$ <span id="total">0</span>
 </p>
 
 
-<button onclick="copiarPix()">
+<div class="pixBox">
+
+<h3>💚 Pagamento PIX</h3>
+
+<p>Chave PIX:</p>
+
+<h2>47999117547</h2>
+
+<button onclick="copiarPix()" style="background:white;color:#00a86b;">
 📋 Copiar PIX
 </button>
 
+<p>Após pagar finalize pelo WhatsApp.</p>
+
+</div>
+
+
+<input id="cliente" placeholder="Digite seu nome">
+
+<br>
 
 <button onclick="enviarWhats()">
-✅ Já paguei - Enviar Pedido
+Finalizar Compra WhatsApp
+</button>
+
+
+<button onclick="fecharCarrinho()">
+Continuar Comprando
+</button>
+
+
+</div>
+
+
+<a class="whatsapp" href="https://wa.me/47999117547">
+📲 Fale conosco
+</a>
+<script>
+
+let carrinho=[];
+
+let produtos=[
+
+{
+nome:"Coxinha",
+valor:0.85,
+img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtmGiJ6ZyI3fWSw_fWL4oEoW1FYQtymCbBARuLQ3ko6Q&s=10",
+qtd:true
+},
+
+{
+nome:"Pastel",
+valor:0.90,
+img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs2p86_PaDbGypNkGgjZDWm1SBVj8fVPUOAUvENgP6hA&s=10",
+qtd:true
+},
+
+{
+nome:"Risoles de carne",
+valor:0.85,
+img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWLI3Pvsvt8ix09Lr9a3ztoCL9HELkMaOJ4bLVlm0wUA&s=10",
+qtd:true
+},
+
+{
+nome:"Risoles de presunto e queijo",
+valor:0.85,
+img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXlM0zeYdDOECGWKe7WFGGX6F6ZcQggdEmJXL5WcXTiQ&s=10",
+qtd:true
+},
+
+{
+nome:"Bolinha de queijo",
+valor:0.90,
+img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsDts9ca3TEpc2zg5obgaaAky-RN5SwjH3m8K2ER_wZg&s=10",
+qtd:true
+},
+
+{
+nome:"Empadinha de frango",
+valor:1.20,
+img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeJktlUUC2EH_OrEQqWBELdbkUnY9j6gvwd_HK9eQJ0w&s=10",
+qtd:true
+},
+
+{
+nome:"Empadão de frango cremoso 2kg",
+valor:130,
+img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFwtN_T9HixrVBtlw-p70GJb1knC-ogaz_jV2O9JsZbw&s=10",
+qtd:false
+},
+
+{
+nome:"Torta brigadeiro branco com chocolate 2kg",
+valor:150,
+img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8VigMyEFqyUOOYoxh_6qK3xDhevv7tUWVzgbbPdeRFA&s=10",
+qtd:false
+}
+
+];
+
+
+let area=document.getElementById("produtos");
+
+
+produtos.forEach((p,i)=>{
+
+
+let op=p.qtd ?
+
+`
+<select id="q${i}">
+<option>25</option>
+<option>50</option>
+<option>75</option>
+<option>100</option>
+<option>150</option>
+<option>200</option>
+<option>300</option>
+</select>
+`
+
+:
+
+`
+<select id="q${i}">
+<option>1</option>
+</select>
+`;
+
+
+area.innerHTML +=
+
+`
+
+<div class="card">
+
+<img src="${p.img}">
+
+<h2>${p.nome}</h2>
+
+<p class="preco">
+R$ ${p.valor.toFixed(2)}
+</p>
+
+${op}
+
+<button onclick="add(${i})">
+Adicionar 🛒
 </button>
 
 </div>
 
+`;
+
+});
+function add(i){
+
+let qtd=parseInt(
+document.getElementById("q"+i).value
+);
+
+carrinho.push({
+
+nome:produtos[i].nome,
+valor:produtos[i].valor,
+qtd:qtd,
+img:produtos[i].img
+
+});
+
+alert("Produto adicionado");
+
+}
 
 
-<div class="pix">
+function abrirCarrinho(){
 
-<h3>PIX</h3>
-
-<p>
-Chave PIX:
-<b>47999117547</b>
-</p>
-
-<p>
-Após pagar clique em "Já paguei"
-</p>
-
-</div>
-
-
-
-<script>
-
-let pedido=[];
-let total=0;
-
-
-function add(nome,valor){
-
-pedido.push(nome);
-total += valor;
+document.getElementById("carrinhoBox").style.display="block";
 
 mostrar();
 
 }
 
 
+
+function fecharCarrinho(){
+
+document.getElementById("carrinhoBox").style.display="none";
+
+}
+
+
+
+function excluir(i){
+
+carrinho.splice(i,1);
+
+mostrar();
+
+}
+
+
+
 function mostrar(){
 
-let texto="";
+let html="";
 
-pedido.forEach((item)=>{
-texto += "✔ "+item+"<br>";
+let total=0;
+
+
+carrinho.forEach((p,i)=>{
+
+
+let subtotal=p.valor*p.qtd;
+
+total+=subtotal;
+
+
+html +=
+
+`
+
+<div class="item">
+
+<img src="${p.img}">
+
+<div>
+
+<b>${p.nome}</b><br>
+
+Quantidade: ${p.qtd}<br>
+
+Subtotal: R$ ${subtotal.toFixed(2)}
+
+<br>
+
+<button onclick="excluir(${i})">
+
+Excluir
+
+</button>
+
+
+</div>
+
+</div>
+
+`;
+
 });
 
 
-document.getElementById("lista").innerHTML=texto;
+document.getElementById("lista").innerHTML=html;
+
 
 document.getElementById("total").innerHTML=
+
 total.toFixed(2);
+
 
 }
 
@@ -177,36 +430,84 @@ total.toFixed(2);
 
 function copiarPix(){
 
-navigator.clipboard.writeText(
-"47999117547"
-);
+navigator.clipboard.writeText("47999117547");
 
-alert("PIX copiado!");
+alert("PIX copiado: 47999117547");
 
 }
+
 
 
 
 function enviarWhats(){
 
-let mensagem=
-"🍩 Rose Doces e Salgados%0A%0A"+
-"Pedido:%0A"+
-pedido.join("%0A")+
-"%0A%0ATotal: R$ "+
-total.toFixed(2)+
-"%0A%0APIX: 47999117547";
+
+let nome=document.getElementById("cliente").value;
+
+
+let texto=
+
+"🌹 Rose Doces e Salgados%0A"+
+
+"Cliente: "+nome+
+
+"%0A%0APedido:%0A";
+
+
+let total=0;
+
+
+
+carrinho.forEach(p=>{
+
+
+let subtotal=p.valor*p.qtd;
+
+
+total+=subtotal;
+
+
+texto +=
+
+"%0A"+p.nome+
+
+"%0AQuantidade: "+p.qtd+
+
+"%0AValor: R$ "+subtotal.toFixed(2)+
+
+"%0A";
+
+
+});
+
+
+
+texto +=
+
+"%0ATOTAL: R$ "+total.toFixed(2)+
+
+"%0A%0A💚 Pagamento PIX"+
+
+"%0AChave PIX: 47999117547";
+
 
 
 window.open(
-"https://wa.me/5547999117547?text="+mensagem
+
+"https://wa.me/47999117547?text="+texto
+
 );
 
+
+
 }
+
 
 
 </script>
 
 
 </body>
+
 </html>
+  
