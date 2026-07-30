@@ -640,7 +640,7 @@
 
         <div class="footer-actions">
           <button class="btn btn-outline" onclick="fecharCarrinho()">Continuar comprando</button>
-          <button class="btn btn-whats" onclick="enviarWhats()">Finalizar no WhatsApp</button>
+          <button class="btn btn-whats" onclick="enviarWhats()">Confirmar pedido e enviar no WhatsApp</button>
         </div>
       </div>
     </div>
@@ -657,62 +657,14 @@
     });
 
     const produtos = [
-      {
-        nome: "Coxinha",
-        valor: 0.85,
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtmGiJ6ZyI3fWSw_fWL4oEoW1FYQtymCbBARuLQ3ko6Q&s=10",
-        qtd: true,
-        medida: "cento / festa"
-      },
-      {
-        nome: "Pastel",
-        valor: 0.90,
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs2p86_PaDbGypNkGgjZDWm1SBVj8fVPUOAUvENgP6hA&s=10",
-        qtd: true,
-        medida: "cento / festa"
-      },
-      {
-        nome: "Risoles de carne",
-        valor: 0.85,
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWLI3Pvsvt8ix09Lr9a3ztoCL9HELkMaOJ4bLVlm0wUA&s=10",
-        qtd: true,
-        medida: "cento / festa"
-      },
-      {
-        nome: "Risoles de presunto e queijo",
-        valor: 0.85,
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXlM0zeYdDOECGWKe7WFGGX6F6ZcQggdEmJXL5WcXTiQ&s=10",
-        qtd: true,
-        medida: "cento / festa"
-      },
-      {
-        nome: "Bolinha de queijo",
-        valor: 0.90,
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsDts9ca3TEpc2zg5obgaaAky-RN5SwjH3m8K2ER_wZg&s=10",
-        qtd: true,
-        medida: "cento / festa"
-      },
-      {
-        nome: "Empadinha de frango",
-        valor: 1.20,
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeJktlUUC2EH_OrEQqWBELdbkUnY9j6gvwd_HK9eQJ0w&s=10",
-        qtd: true,
-        medida: "cento / festa"
-      },
-      {
-        nome: "Empadão de frango cremoso 2kg",
-        valor: 130,
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFwtN_T9HixrVBtlw-p70GJb1knC-ogaz_jV2O9JsZbw&s=10",
-        qtd: false,
-        medida: "unidade"
-      },
-      {
-        nome: "Torta brigadeiro branco com chocolate 2kg",
-        valor: 150,
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8VigMyEFqyUOOYoxh_6qK3xDhevv7tUWVzgbbPdeRFA&s=10",
-        qtd: false,
-        medida: "unidade"
-      }
+      { nome: "Coxinha", valor: 0.85, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtmGiJ6ZyI3fWSw_fWL4oEoW1FYQtymCbBARuLQ3ko6Q&s=10", qtd: true, medida: "cento / festa" },
+      { nome: "Pastel", valor: 0.90, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs2p86_PaDbGypNkGgjZDWm1SBVj8fVPUOAUvENgP6hA&s=10", qtd: true, medida: "cento / festa" },
+      { nome: "Risoles de carne", valor: 0.85, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWLI3Pvsvt8ix09Lr9a3ztoCL9HELkMaOJ4bLVlm0wUA&s=10", qtd: true, medida: "cento / festa" },
+      { nome: "Risoles de presunto e queijo", valor: 0.85, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXlM0zeYdDOECGWKe7WFGGX6F6ZcQggdEmJXL5WcXTiQ&s=10", qtd: true, medida: "cento / festa" },
+      { nome: "Bolinha de queijo", valor: 0.90, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsDts9ca3TEpc2zg5obgaaAky-RN5SwjH3m8K2ER_wZg&s=10", qtd: true, medida: "cento / festa" },
+      { nome: "Empadinha de frango", valor: 1.20, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeJktlUUC2EH_OrEQqWBELdbkUnY9j6gvwd_HK9eQJ0w&s=10", qtd: true, medida: "cento / festa" },
+      { nome: "Empadão de frango cremoso 2kg", valor: 130, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFwtN_T9HixrVBtlw-p70GJb1knC-ogaz_jV2O9JsZbw&s=10", qtd: false, medida: "unidade" },
+      { nome: "Torta brigadeiro branco com chocolate 2kg", valor: 150, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8VigMyEFqyUOOYoxh_6qK3xDhevv7tUWVzgbbPdeRFA&s=10", qtd: false, medida: "unidade" }
     ];
 
     const carrinho = [];
@@ -877,25 +829,43 @@
         return;
       }
 
+      const confirmar = confirm("Confirmar pedido e enviar a lista para o WhatsApp?");
+      if (!confirmar) return;
+
       let total = 0;
-      let linhasPedido = "";
+      let mensagem = `🌹 Rose Doces e Salgados
+`;
+      mensagem += `Cliente: ${nome}
+
+`;
+      mensagem += `Pedido:
+`;
 
       carrinho.forEach((p) => {
         const subtotal = p.valor * p.qtd;
         total += subtotal;
-        linhasPedido += `• ${p.nome}%0A`;
-        linhasPedido += `Quantidade: ${p.qtd}%0A`;
-        linhasPedido += `Subtotal: ${moeda.format(subtotal)}%0A%0A`;
+
+        mensagem += `• ${p.nome}
+`;
+        mensagem += `  Quantidade: ${p.qtd}
+`;
+        mensagem += `  Unitário: ${moeda.format(p.valor)}
+`;
+        mensagem += `  Subtotal: ${moeda.format(subtotal)}
+
+`;
       });
 
-      const texto =
-        `🌹 *Rose Doces e Salgados*%0A` +
-        `Cliente: ${encodeURIComponent(nome)}%0A%0A` +
-        `*Pedido:*%0A${linhasPedido}` +
-        `*TOTAL:* ${encodeURIComponent(moeda.format(total))}%0A%0A` +
-        `💚 Pagamento via PIX%0A` +
-        `Chave PIX: ${CHAVE_PIX}`;
+      mensagem += `TOTAL: ${moeda.format(total)}
 
+`;
+      mensagem += `Entrega a combinar
+`;
+      mensagem += `Pagamento via PIX
+`;
+      mensagem += `Chave PIX: ${CHAVE_PIX}`;
+
+      const texto = encodeURIComponent(mensagem);
       window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${texto}`, "_blank");
     }
 
