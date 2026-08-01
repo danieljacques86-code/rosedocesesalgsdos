@@ -674,7 +674,16 @@
       { nome: "Bolinha de queijo", valor: 0.90, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsDts9ca3TEpc2zg5obgaaAky-RN5SwjH3m8K2ER_wZg&s=10", qtd: true, medida: "cento / festa" },
       { nome: "Empadinha de frango", valor: 1.20, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeJktlUUC2EH_OrEQqWBELdbkUnY9j6gvwd_HK9eQJ0w&s=10", qtd: true, medida: "cento / festa" },
       { nome: "Empadão de frango cremoso 2kg", valor: 130, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFwtN_T9HixrVBtlw-p70GJb1knC-ogaz_jV2O9JsZbw&s=10", qtd: false, medida: "unidade" },
-      { nome: "Torta brigadeiro branco com chocolate 2kg", valor: 150, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8VigMyEFqyUOOYoxh_6qK3xDhevv7tUWVzgbbPdeRFA&s=10", qtd: false, medida: "unidade" }
+      { nome: "Torta brigadeiro branco com chocolate 2kg", valor: 150, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8VigMyEFqyUOOYoxh_6qK3xDhevv7tUWVzgbbPdeRFA&s=10", qtd: false, medida: "unidade" },
+      { nome: "Mini pizza", valor: 1.10, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0Qh8qXqZq7Qv2W5o9Qj3x2Q0yH5v6Z9X7M8o3Jv9x&s=10", qtd: true, medida: "cento / festa" },
+      { nome: "Kibe", valor: 0.95, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1vQ9R2Hh8t8v9J0K1L2M3N4O5P6Q7R8S9T0U1V2W3&s=10", qtd: true, medida: "cento / festa" },
+      { nome: "Enroladinho de salsicha", valor: 0.95, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7Y6X5W4V3U2T1S0R9Q8P7O6N5M4L3K2J1I0H9G8F7&s=10", qtd: true, medida: "cento / festa" },
+      { nome: "Brigadeiro gourmet", valor: 1.50, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6T5R4Q3P2O1N0M9L8K7J6H5G4F3E2D1C0B9A8Z7Y6&s=10", qtd: true, medida: "cento / festa" },
+      { nome: "Beijinho", valor: 1.40, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5W4E3R2T1Y0U9I8O7P6L5K4J3H2G1F0D9S8A7Q6W5&s=10", qtd: true, medida: "cento / festa" },
+      { nome: "Quibe de forno", valor: 1.20, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4E3W2Q1A0S9D8F7G6H5J4K3L2M1N0P9O8I7U6Y5T4&s=10", qtd: true, medida: "cento / festa" },
+      { nome: "Torta salgada de frango", valor: 120, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3W2E1R0T9Y8U7I6O5P4L3K2J1H0G9F8D7S6A5Q4W3&s=10", qtd: false, medida: "unidade" },
+      { nome: "Bolo no pote", valor: 8.50, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2E1W0Q9A8S7D6F5G4H3J2K1L0M9N8P7O6I5U4Y3T2&s=10", qtd: false, medida: "unidade" },
+      { nome: "Pudim grande", valor: 35, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1W0E9R8T7Y6U5I4O3P2L1K0J9H8G7F6D5S4A3Q2W1&s=10", qtd: false, medida: "unidade" }
     ];
 
     const carrinho = [];
@@ -693,9 +702,7 @@
     }
 
     function criarOpcoesQuantidade(item, index) {
-      if (!item.qtd) {
-        return `<select id="q${index}"><option value="1">1 unidade</option></select>`;
-      }
+      if (!item.qtd) return `<select id="q${index}"><option value="1">1 unidade</option></select>`;
       const quantidades = [25, 50, 75, 100, 150, 200, 300];
       return `<select id="q${index}">${quantidades.map(q => `<option value="${q}">${q} unidades</option>`).join("")}</select>`;
     }
@@ -728,50 +735,25 @@
       const produto = produtos[i];
       const qtd = Number(document.getElementById(`q${i}`).value);
       const existente = carrinho.find(item => item.nome === produto.nome);
-
-      if (existente) existente.qtd += qtd;
-      else carrinho.push({ nome: produto.nome, valor: produto.valor, qtd, img: produto.img, medida: produto.medida });
-
+      if (existente) existente.qtd += qtd; else carrinho.push({ nome: produto.nome, valor: produto.valor, qtd, img: produto.img, medida: produto.medida });
       atualizarContador();
       mostrar();
       mostrarToast(`${produto.nome} adicionado ao carrinho.`);
     }
 
-    function abrirCarrinho() {
-      carrinhoBox.classList.add("open");
-      carrinhoBox.setAttribute("aria-hidden", "false");
-      mostrar();
-    }
-
-    function fecharCarrinho() {
-      carrinhoBox.classList.remove("open");
-      carrinhoBox.setAttribute("aria-hidden", "true");
-    }
-
-    function excluir(index) {
-      carrinho.splice(index, 1);
-      atualizarContador();
-      mostrar();
-      mostrarToast("Item removido do carrinho.");
-    }
+    function abrirCarrinho() { carrinhoBox.classList.add("open"); carrinhoBox.setAttribute("aria-hidden", "false"); mostrar(); }
+    function fecharCarrinho() { carrinhoBox.classList.remove("open"); carrinhoBox.setAttribute("aria-hidden", "true"); }
+    function excluir(index) { carrinho.splice(index, 1); atualizarContador(); mostrar(); mostrarToast("Item removido do carrinho."); }
 
     function mostrar() {
       if (!carrinho.length) {
-        lista.innerHTML = `
-          <div class="lista-vazia">
-            <h3 style="margin-top:0;">Seu carrinho está vazio</h3>
-            <p>Adicione produtos do cardápio para continuar.</p>
-          </div>
-        `;
+        lista.innerHTML = `<div class="lista-vazia"><h3 style="margin-top:0;">Seu carrinho está vazio</h3><p>Adicione produtos do cardápio para continuar.</p></div>`;
         totalEl.textContent = "0,00";
         return;
       }
-
       let total = 0;
       lista.innerHTML = carrinho.map((p, i) => {
-        const subtotal = p.valor * p.qtd;
-        total += subtotal;
-
+        const subtotal = p.valor * p.qtd; total += subtotal;
         return `
           <div class="item">
             <img src="${p.img}" alt="${p.nome}" />
@@ -788,35 +770,18 @@
           </div>
         `;
       }).join("");
-
-      totalEl.textContent = total.toLocaleString("pt-BR", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      });
+      totalEl.textContent = total.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
     function copiarPix() {
-      navigator.clipboard.writeText(CHAVE_PIX)
-        .then(() => mostrarToast(`Chave PIX copiada: ${CHAVE_PIX}`))
-        .catch(() => mostrarToast("Não foi possível copiar automaticamente."));
+      navigator.clipboard.writeText(CHAVE_PIX).then(() => mostrarToast(`Chave PIX copiada: ${CHAVE_PIX}`)).catch(() => mostrarToast("Não foi possível copiar automaticamente."));
     }
 
     function enviarWhats() {
       const nome = document.getElementById("cliente").value.trim();
-
-      if (!carrinho.length) {
-        mostrarToast("Adicione produtos antes de finalizar.");
-        return;
-      }
-
-      if (!nome) {
-        mostrarToast("Digite seu nome para finalizar o pedido.");
-        document.getElementById("cliente").focus();
-        return;
-      }
-
-      const confirmar = confirm("Confirmar pedido e enviar a lista para o WhatsApp?");
-      if (!confirmar) return;
+      if (!carrinho.length) return mostrarToast("Adicione produtos antes de finalizar.");
+      if (!nome) { mostrarToast("Digite seu nome para finalizar o pedido."); document.getElementById("cliente").focus(); return; }
+      if (!confirm("Confirmar pedido e enviar a lista para o WhatsApp?")) return;
 
       let total = 0;
       let mensagem = `🌹 Rose Doces e Salgados
@@ -853,10 +818,7 @@
       window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensagem)}`, "_blank");
     }
 
-    carrinhoBox.addEventListener("click", (event) => {
-      if (event.target === carrinhoBox) fecharCarrinho();
-    });
-
+    carrinhoBox.addEventListener("click", (event) => { if (event.target === carrinhoBox) fecharCarrinho(); });
     renderProdutos();
     atualizarContador();
     mostrar();
