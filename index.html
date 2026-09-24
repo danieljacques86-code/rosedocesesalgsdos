@@ -1,988 +1,1841 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Rose Doces e Salgados</title>
-  <style>
-    :root {
-      --primary: #c1121f;
-      --primary-dark: #9b0d18;
-      --accent: #ff7ab6;
-      --success: #0f9d58;
-      --success-dark: #0b7d45;
-      --surface: #ffffff;
-      --text: #2b2b2b;
-      --muted: #6b7280;
-      --border: #ececec;
-      --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      --radius: 22px;
-      --container: 1200px;
-    }
-
-    * { box-sizing: border-box; }
-
-    html {
-      scroll-behavior: smooth;
-      -webkit-text-size-adjust: 100%;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(180deg, #fff7fa 0%, #fffdf8 100%);
-      color: var(--text);
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
-    }
-
-    button, select, input {
-      font: inherit;
-    }
-
-    .container {
-      width: min(100% - 20px, var(--container));
-      margin: 0 auto;
-    }
-
-    .hero {
-      background: linear-gradient(135deg, var(--primary) 0%, #e5383b 45%, var(--accent) 100%);
-      color: #fff;
-      padding: 18px 0 22px;
-      box-shadow: var(--shadow);
-    }
-
-    .hero-content {
-      display: grid;
-      grid-template-columns: 96px 1fr auto;
-      gap: 14px;
-      align-items: center;
-    }
-
-    .logo-badge {
-      width: 96px;
-      height: 96px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.16);
-      border: 3px solid rgba(255, 255, 255, 0.35);
-      display: grid;
-      place-items: center;
-      font-size: 32px;
-      font-weight: bold;
-      backdrop-filter: blur(6px);
-    }
-
-    .hero h1 {
-      margin: 0 0 6px;
-      font-size: clamp(24px, 5vw, 42px);
-      line-height: 1.1;
-    }
-
-    .hero p {
-      margin: 0;
-      color: rgba(255, 255, 255, 0.92);
-      font-size: 15px;
-      line-height: 1.35;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      min-width: 180px;
-    }
-
-    .btn {
-      border: 0;
-      border-radius: 999px;
-      padding: 14px 16px;
-      cursor: pointer;
-      font-weight: 700;
-      transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
-      min-height: 48px;
-    }
-
-    .btn:hover { transform: translateY(-1px); }
-    .btn:active { transform: translateY(0); }
-
-    .btn-primary {
-      background: #fff;
-      color: var(--primary);
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.18);
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.28);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .section-head {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 20px 0 12px;
-    }
-
-    .section-head h2 {
-      margin: 0;
-      font-size: 24px;
-    }
-
-    .section-head p {
-      margin: 6px 0 0;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.4;
-    }
-
-    .badge-info {
-      background: #fff;
-      border: 1px solid var(--border);
-      color: var(--muted);
-      padding: 10px 12px;
-      border-radius: 999px;
-      box-shadow: var(--shadow);
-      white-space: nowrap;
-      font-size: 13px;
-    }
-
-    .galeria-section {
-      padding: 22px 0 8px;
-    }
-
-    .gallery-shell {
-      position: relative;
-    }
-
-    .gallery-wrapper {
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      scrollbar-width: thin;
-      padding-bottom: 10px;
-    }
-
-    .gallery-wrapper::-webkit-scrollbar {
-      height: 10px;
-    }
-
-    .gallery-wrapper::-webkit-scrollbar-thumb {
-      background: rgba(193, 18, 31, 0.25);
-      border-radius: 999px;
-    }
-
-    .gallery-track {
-      display: flex;
-      gap: 14px;
-      min-width: max-content;
-    }
-
-    .gallery-card {
-      width: 220px;
-      flex: 0 0 220px;
-      border-radius: 20px;
-      overflow: hidden;
-      background: #fff;
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(0, 0, 0, 0.05);
-    }
-
-    .gallery-card img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      background: #f4f4f4;
-    }
-
-    .gallery-caption {
-      padding: 12px 14px;
-      font-size: 14px;
-      color: var(--text);
-      font-weight: 700;
-    }
-
-    .gallery-card.placeholder {
-      display: grid;
-      place-items: center;
-      min-height: 274px;
-      background: linear-gradient(180deg, #fff 0%, #fff6f8 100%);
-      border: 2px dashed #f1bcc7;
-    }
-
-    .gallery-card.placeholder .gallery-caption {
-      text-align: center;
-      color: var(--muted);
-      font-weight: 600;
-      line-height: 1.45;
-    }
-
-    .gallery-nav {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .gallery-nav button {
-      width: 46px;
-      height: 46px;
-      border-radius: 50%;
-      border: 0;
-      background: var(--primary);
-      color: #fff;
-      font-size: 20px;
-      cursor: pointer;
-      box-shadow: var(--shadow);
-    }
-
-    .produtos {
-      padding-bottom: 110px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-    }
-
-    .card {
-      background: var(--surface);
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(0, 0, 0, 0.04);
-    }
-
-    .card-media {
-      position: relative;
-      height: 200px;
-      background: #f6f6f6;
-    }
-
-    .card-media img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .tag {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      background: rgba(255, 255, 255, 0.92);
-      color: var(--primary);
-      padding: 6px 9px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .card-body {
-      padding: 16px;
-    }
-
-    .card h3 {
-      margin: 0 0 8px;
-      font-size: 18px;
-      line-height: 1.25;
-    }
-
-    .preco {
-      font-size: 22px;
-      font-weight: 800;
-      color: var(--primary);
-      margin-bottom: 12px;
-    }
-
-    .preco small {
-      display: block;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--muted);
-      margin-top: 4px;
-    }
-
-    .controls {
-      display: grid;
-      gap: 10px;
-    }
-
-    select,
-    input {
-      width: 100%;
-      padding: 14px;
-      border-radius: 14px;
-      border: 1px solid #d8d8d8;
-      background: #fff;
-      outline: none;
-      min-height: 48px;
-    }
-
-    select:focus,
-    input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(193, 18, 31, 0.12);
-    }
-
-    .btn-add {
-      background: var(--primary);
-      color: #fff;
-      width: 100%;
-    }
-
-    .cart-fab,
-    .whatsapp-fab {
-      position: fixed;
-      right: 14px;
-      z-index: 20;
-      border-radius: 999px;
-      box-shadow: var(--shadow);
-      text-decoration: none;
-      font-weight: 800;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      min-height: 50px;
-      padding: 14px 16px;
-    }
-
-    .cart-fab {
-      bottom: 82px;
-      background: var(--primary);
-      color: #fff;
-      border: 0;
-    }
-
-    .whatsapp-fab {
-      bottom: 16px;
-      background: #25d366;
-      color: #fff;
-    }
-
-    .cart-count {
-      min-width: 24px;
-      height: 24px;
-      padding: 0 8px;
-      border-radius: 999px;
-      background: #fff;
-      color: var(--primary);
-      font-size: 13px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .drawer {
-      position: fixed;
-      inset: 0;
-      background: rgba(17, 17, 17, 0.55);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 12px;
-      z-index: 50;
-    }
-
-    .drawer.open {
-      display: flex;
-    }
-
-    .drawer-panel {
-      width: min(100%, 780px);
-      max-height: 92vh;
-      overflow: hidden;
-      background: #fff;
-      border-radius: 24px;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
-      display: grid;
-      grid-template-rows: auto 1fr auto;
-    }
-
-    .drawer-header,
-    .drawer-footer {
-      padding: 16px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .drawer-footer {
-      border-bottom: 0;
-      border-top: 1px solid var(--border);
-      display: grid;
-      gap: 12px;
-    }
-
-    .drawer-header-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .drawer-header h2 {
-      margin: 0;
-      font-size: 22px;
-    }
-
-    .drawer-close {
-      background: #f3f4f6;
-      color: #111;
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      border: 0;
-      cursor: pointer;
-      font-size: 22px;
-      flex-shrink: 0;
-    }
-
-    .drawer-body {
-      padding: 16px;
-      overflow: auto;
-      background: #fffdfd;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .lista-vazia {
-      text-align: center;
-      color: var(--muted);
-      padding: 26px 10px;
-      border: 1px dashed #dadada;
-      border-radius: 18px;
-      background: #fff;
-    }
-
-    .item {
-      display: grid;
-      grid-template-columns: 76px 1fr auto;
-      gap: 12px;
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 12px;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-
-    .item img {
-      width: 76px;
-      height: 76px;
-      object-fit: cover;
-      border-radius: 14px;
-    }
-
-    .item-info b {
-      display: block;
-      font-size: 15px;
-      margin-bottom: 5px;
-    }
-
-    .item-info span {
-      display: block;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.4;
-    }
-
-    .item-actions {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 8px;
-    }
-
-    .subtotal {
-      font-size: 15px;
-      font-weight: 800;
-      color: var(--primary);
-    }
-
-    .btn-remove {
-      background: #fff1f2;
-      color: var(--primary);
-      padding: 10px 12px;
-      min-height: 42px;
-    }
-
-    .resumo {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .total {
-      font-size: 26px;
-      font-weight: 900;
-      color: var(--primary);
-    }
-
-    .pix-box {
-      background: linear-gradient(135deg, var(--success) 0%, #21bf73 100%);
-      color: #fff;
-      padding: 16px;
-      border-radius: 18px;
-      display: grid;
-      gap: 8px;
-    }
-
-    .pix-box h3,
-    .pix-box p,
-    .pix-box h4 {
-      margin: 0;
-      line-height: 1.35;
-    }
-
-    .pix-key {
-      font-size: 22px;
-      font-weight: 900;
-      word-break: break-word;
-    }
-
-    .btn-pix {
-      background: #fff;
-      color: var(--success-dark);
-      justify-self: start;
-    }
-
-    .footer-actions {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-    }
-
-    .btn-outline {
-      background: #fff;
-      color: var(--primary);
-      border: 1px solid rgba(193, 18, 31, 0.25);
-    }
-
-    .btn-whats {
-      background: var(--primary);
-      color: #fff;
-    }
-
-    .toast {
-      position: fixed;
-      top: 16px;
-      left: 50%;
-      transform: translateX(-50%) translateY(-15px);
-      background: #111827;
-      color: #fff;
-      padding: 12px 16px;
-      border-radius: 999px;
-      box-shadow: var(--shadow);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s ease, transform 0.25s ease;
-      z-index: 100;
-      text-align: center;
-      max-width: calc(100% - 24px);
-      font-size: 14px;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-
-    @media (max-width: 860px) {
-      .hero-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-        justify-items: center;
-      }
-
-      .hero-actions {
-        min-width: auto;
-        width: 100%;
-        max-width: 320px;
-      }
-
-      .section-head {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .container {
-        width: min(100% - 16px, var(--container));
-      }
-
-      .hero {
-        padding: 14px 0 18px;
-      }
-
-      .logo-badge {
-        width: 84px;
-        height: 84px;
-        font-size: 28px;
-      }
-
-      .gallery-card {
-        width: 180px;
-        flex-basis: 180px;
-      }
-
-      .gallery-card img {
-        height: 180px;
-      }
-
-      .produtos {
-        grid-template-columns: 1fr;
-        gap: 14px;
-      }
-
-      .card-media {
-        height: 180px;
-      }
-
-      .drawer {
-        padding: 0;
-      }
-
-      .drawer-panel {
-        width: 100%;
-        height: 100dvh;
-        max-height: 100dvh;
-        border-radius: 0;
-      }
-
-      .drawer-body {
-        padding: 12px;
-      }
-
-      .item {
-        grid-template-columns: 1fr;
-      }
-
-      .item img {
-        width: 100%;
-        height: 180px;
-      }
-
-      .item-actions {
-        align-items: stretch;
-      }
-
-      .footer-actions {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+
+Â Â <meta charset="UTF-8" />
+
+Â Â <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+Â Â <title>Rose Doces e Salgados</title>
+
+Â Â <style>
+
+Â Â Â Â :root {
+
+Â Â Â Â Â Â --primary: #c1121f;
+
+Â Â Â Â Â Â --primary-dark: #9b0d18;
+
+Â Â Â Â Â Â --accent: #ff7ab6;
+
+Â Â Â Â Â Â --success: #0f9d58;
+
+Â Â Â Â Â Â --success-dark: #0b7d45;
+
+Â Â Â Â Â Â --surface: #ffffff;
+
+Â Â Â Â Â Â --text: #2b2b2b;
+
+Â Â Â Â Â Â --muted: #6b7280;
+
+Â Â Â Â Â Â --border: #ececec;
+
+Â Â Â Â Â Â --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+Â Â Â Â Â Â --radius: 22px;
+
+Â Â Â Â Â Â --container: 1200px;
+
+Â Â Â Â }
+
+
+Â Â Â Â * { box-sizing: border-box; }
+
+
+Â Â Â Â html {
+
+Â Â Â Â Â Â scroll-behavior: smooth;
+
+Â Â Â Â Â Â -webkit-text-size-adjust: 100%;
+
+Â Â Â Â }
+
+
+Â Â Â Â body {
+
+Â Â Â Â Â Â margin: 0;
+
+Â Â Â Â Â Â font-family: Arial, Helvetica, sans-serif;
+
+Â Â Â Â Â Â background: linear-gradient(180deg, #fff7fa 0%, #fffdf8 100%);
+
+Â Â Â Â Â Â color: var(--text);
+
+Â Â Â Â Â Â -webkit-font-smoothing: antialiased;
+
+Â Â Â Â Â Â text-rendering: optimizeLegibility;
+
+Â Â Â Â }
+
+
+Â Â Â Â img {
+
+Â Â Â Â Â Â max-width: 100%;
+
+Â Â Â Â Â Â display: block;
+
+Â Â Â Â }
+
+
+Â Â Â Â button, select, input {
+
+Â Â Â Â Â Â font: inherit;
+
+Â Â Â Â }
+
+
+Â Â Â Â .container {
+
+Â Â Â Â Â Â width: min(100% - 20px, var(--container));
+
+Â Â Â Â Â Â margin: 0 auto;
+
+Â Â Â Â }
+
+
+Â Â Â Â .hero {
+
+Â Â Â Â Â Â background: linear-gradient(135deg, var(--primary) 0%, #e5383b 45%, var(--accent) 100%);
+
+Â Â Â Â Â Â color: #fff;
+
+Â Â Â Â Â Â padding: 18px 0 22px;
+
+Â Â Â Â Â Â box-shadow: var(--shadow);
+
+Â Â Â Â }
+
+
+Â Â Â Â .hero-content {
+
+Â Â Â Â Â Â display: grid;
+
+Â Â Â Â Â Â grid-template-columns: 96px 1fr auto;
+
+Â Â Â Â Â Â gap: 14px;
+
+Â Â Â Â Â Â align-items: center;
+
+Â Â Â Â }
+
+
+Â Â Â Â .logo-badge {
+
+Â Â Â Â Â Â width: 96px;
+
+Â Â Â Â Â Â height: 96px;
+
+Â Â Â Â Â Â border-radius: 50%;
+
+Â Â Â Â Â Â background: rgba(255, 255, 255, 0.16);
+
+Â Â Â Â Â Â border: 3px solid rgba(255, 255, 255, 0.35);
+
+Â Â Â Â Â Â display: grid;
+
+Â Â Â Â Â Â place-items: center;
+
+Â Â Â Â Â Â font-size: 32px;
+
+Â Â Â Â Â Â font-weight: bold;
+
+Â Â Â Â Â Â backdrop-filter: blur(6px);
+
+Â Â Â Â }
+
+
+Â Â Â Â .hero h1 {
+
+Â Â Â Â Â Â margin: 0 0 6px;
+
+Â Â Â Â Â Â font-size: clamp(24px, 5vw, 42px);
+
+Â Â Â Â Â Â line-height: 1.1;
+
+Â Â Â Â }
+
+
+Â Â Â Â .hero p {
+
+Â Â Â Â Â Â margin: 0;
+
+Â Â Â Â Â Â color: rgba(255, 255, 255, 0.92);
+
+Â Â Â Â Â Â font-size: 15px;
+
+Â Â Â Â Â Â line-height: 1.35;
+
+Â Â Â Â }
+
+
+Â Â Â Â .hero-actions {
+
+Â Â Â Â Â Â display: flex;
+
+Â Â Â Â Â Â flex-direction: column;
+
+Â Â Â Â Â Â gap: 8px;
+
+Â Â Â Â Â Â min-width: 180px;
+
+Â Â Â Â }
+
+
+Â Â Â Â .btn {
+
+Â Â Â Â Â Â border: 0;
+
+Â Â Â Â Â Â border-radius: 999px;
+
+Â Â Â Â Â Â padding: 14px 16px;
+
+Â Â Â Â Â Â cursor: pointer;
+
+Â Â Â Â Â Â font-weight: 700;
+
+Â Â Â Â Â Â transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+
+Â Â Â Â Â Â min-height: 48px;
+
+Â Â Â Â }
+
+
+Â Â Â Â .btn:hover { transform: translateY(-1px); }
+
+Â Â Â Â .btn:active { transform: translateY(0); }
+
+
+Â Â Â Â .btn-primary {
+
+Â Â Â Â Â Â background: #fff;
+
+Â Â Â Â Â Â color: var(--primary);
+
+Â Â Â Â }
+
+
+Â Â Â Â .btn-secondary {
+
+Â Â Â Â Â Â background: rgba(255, 255, 255, 0.18);
+
+Â Â Â Â Â Â color: #fff;
+
+Â Â Â Â Â Â border: 1px solid rgba(255, 255, 255, 0.28);
+
+Â Â Â Â Â Â text-decoration: none;
+
+Â Â Â Â Â Â display: inline-flex;
+
+Â Â Â Â Â Â align-items: center;
+
+Â Â Â Â Â Â justify-content: center;
+
+Â Â Â Â }
+
+
+Â Â Â Â .section-head {
+
+Â Â Â Â Â Â display: flex;
+
+Â Â Â Â Â Â align-items: flex-start;
+
+Â Â Â Â Â Â justify-content: space-between;
+
+Â Â Â Â Â Â gap: 12px;
+
+Â Â Â Â Â Â padding: 20px 0 12px;
+
+Â Â Â Â }
+
+
+Â Â Â Â .section-head h2 {
+
+Â Â Â Â Â Â margin: 0;
+
+Â Â Â Â Â Â font-size: 24px;
+
+Â Â Â Â }
+
+
+Â Â Â Â .section-head p {
+
+Â Â Â Â Â Â margin: 6px 0 0;
+
+Â Â Â Â Â Â color: var(--muted);
+
+Â Â Â Â Â Â font-size: 14px;
+
+Â Â Â Â Â Â line-height: 1.4;
+
+Â Â Â Â }
+
+
+Â Â Â Â .badge-info {
+
+Â Â Â Â Â Â background: #fff;
+
+Â Â Â Â Â Â border: 1px solid var(--border);
+
+Â Â Â Â Â Â color: var(--muted);
+
+Â Â Â Â Â Â padding: 10px 12px;
+
+Â Â Â Â Â Â border-radius: 999px;
+
+Â Â Â Â Â Â box-shadow: var(--shadow);
+
+Â Â Â Â Â Â white-space: nowrap;
+
+Â Â Â Â Â Â font-size: 13px;
+
+Â Â Â Â }
+
+
+Â Â Â Â .galeria-section {
+
+Â Â Â Â Â Â padding: 22px 0 8px;
+
+Â Â Â Â }
+
+
+Â Â Â Â .gallery-shell {
+
+Â Â Â Â Â Â position: relative;
+
+Â Â Â Â }
+
+
+Â Â Â Â .gallery-wrapper {
+
+Â Â Â Â Â Â overflow-x: auto;
+
+Â Â Â Â Â Â scroll-behavior: smooth;
+
+Â Â Â Â Â Â scrollbar-width: thin;
+
+Â Â Â Â Â Â padding-bottom: 10px;
+
+Â Â Â Â }
+
+
+Â Â Â Â .gallery-wrapper::-webkit-scrollbar {
+
+Â Â Â Â Â Â height: 10px;
+
+Â Â Â Â }
+
+
+Â Â Â Â .gallery-wrapper::-webkit-scrollbar-thumb {
+
+Â Â Â Â Â Â background: rgba(193, 18, 31, 0.25);
+
+Â Â Â Â Â Â border-radius: 999px;
+
+Â Â Â Â }
+
+
+Â Â Â Â .gallery-track {
+
+Â Â Â Â Â Â display: flex;
+
+Â Â Â Â Â Â gap: 14px;
+
+Â Â Â Â Â Â min-width: max-content;
+
+Â Â Â Â }
+
+
+Â Â Â Â .gallery-card {
+
+Â Â Â Â Â Â width: 220px;
+
+Â Â Â Â Â Â flex: 0 0 220px;
+
+Â Â Â Â Â Â border-radius: 20px;
+
+Â Â Â Â Â Â overflow: hidden;
+
+Â Â Â Â Â Â background: #fff;
+
+Â Â Â Â Â Â box-shadow: var(--shadow);
+
+Â Â Â Â Â Â border: 1px solid rgba(0, 0, 0, 0.05);
+
+Â Â Â Â }
+
+
+Â Â Â Â .gallery-card img {
+
+Â Â Â Â Â Â width: 100%;
+
+Â Â Â Â Â Â height: 220px;
+
+Â Â Â Â Â Â object-fit: cover;
+
+Â Â Â Â Â Â background: #f4f4f4;
+
+Â Â Â Â }
+
+
+Â Â Â Â .gallery-caption {
+
+Â Â Â Â Â Â padding: 12px 14px;
+
+Â Â Â Â Â Â font-size: 14px;
+
+Â Â Â Â Â Â color: var(--text);
+
+Â Â Â Â Â Â font-weight: 700;
+
+Â Â Â Â }
+
+
+Â Â Â Â .gallery-card.placeholder {
+
+Â Â Â Â Â Â display: grid;
+
+Â Â Â Â Â Â place-items: center;
+
+Â Â Â Â Â Â min-height: 274px;
+
+Â Â Â Â Â Â background: linear-gradient(180deg, #fff 0%, #fff6f8 100%);
+
+Â Â Â Â Â Â border: 2px dashed #f1bcc7;
+
+Â Â Â Â }
+
+
+Â Â Â Â .gallery-card.placeholder .gallery-caption {
+
+Â Â Â Â Â Â text-align: center;
+
+Â Â Â Â Â Â color: var(--muted);
+
+Â Â Â Â Â Â font-weight: 600;
+
+Â Â Â Â Â Â line-height: 1.45;
+
+Â Â Â Â }
+
+
+Â Â Â Â .gallery-nav {
+
+Â Â Â Â Â Â display: flex;
+
+Â Â Â Â Â Â justify-content: flex-end;
+
+Â Â Â Â Â Â gap: 10px;
+
+Â Â Â Â Â Â margin-top: 12px;
+
+Â Â Â Â }
+
+
+Â Â Â Â .gallery-nav button {
+
+Â Â Â Â Â Â width: 46px;
+
+Â Â Â Â Â Â height: 46px;
+
+Â Â Â Â Â Â border-radius: 50%;
+
+Â Â Â Â Â Â border: 0;
+
+Â Â Â Â Â Â background: var(--primary);
+
+Â Â Â Â Â Â color: #fff;
+
+Â Â Â Â Â Â font-size: 20px;
+
+Â Â Â Â Â Â cursor: pointer;
+
+Â Â Â Â Â Â box-shadow: var(--shadow);
+
+Â Â Â Â }
+
+
+Â Â Â Â .produtos {
+
+Â Â Â Â Â Â padding-bottom: 110px;
+
+Â Â Â Â Â Â display: grid;
+
+Â Â Â Â Â Â grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+
+Â Â Â Â Â Â gap: 16px;
+
+Â Â Â Â }
+
+
+Â Â Â Â .card {
+
+Â Â Â Â Â Â background: var(--surface);
+
+Â Â Â Â Â Â border-radius: var(--radius);
+
+Â Â Â Â Â Â overflow: hidden;
+
+Â Â Â Â Â Â box-shadow: var(--shadow);
+
+Â Â Â Â Â Â border: 1px solid rgba(0, 0, 0, 0.04);
+
+Â Â Â Â }
+
+
+Â Â Â Â .card-media {
+
+Â Â Â Â Â Â position: relative;
+
+Â Â Â Â Â Â height: 200px;
+
+Â Â Â Â Â Â background: #f6f6f6;
+
+Â Â Â Â }
+
+
+Â Â Â Â .card-media img {
+
+Â Â Â Â Â Â width: 100%;
+
+Â Â Â Â Â Â height: 100%;
+
+Â Â Â Â Â Â object-fit: cover;
+
+Â Â Â Â }
+
+
+Â Â Â Â .tag {
+
+Â Â Â Â Â Â position: absolute;
+
+Â Â Â Â Â Â top: 12px;
+
+Â Â Â Â Â Â left: 12px;
+
+Â Â Â Â Â Â background: rgba(255, 255, 255, 0.92);
+
+Â Â Â Â Â Â color: var(--primary);
+
+Â Â Â Â Â Â padding: 6px 9px;
+
+Â Â Â Â Â Â border-radius: 999px;
+
+Â Â Â Â Â Â font-size: 12px;
+
+Â Â Â Â Â Â font-weight: 700;
+
+Â Â Â Â }
+
+
+Â Â Â Â .card-body {
+
+Â Â Â Â Â Â padding: 16px;
+
+Â Â Â Â }
+
+
+Â Â Â Â .card h3 {
+
+Â Â Â Â Â Â margin: 0 0 8px;
+
+Â Â Â Â Â Â font-size: 18px;
+
+Â Â Â Â Â Â line-height: 1.25;
+
+Â Â Â Â }
+
+
+Â Â Â Â .preco {
+
+Â Â Â Â Â Â font-size: 22px;
+
+Â Â Â Â Â Â font-weight: 800;
+
+Â Â Â Â Â Â color: var(--primary);
+
+Â Â Â Â Â Â margin-bottom: 12px;
+
+Â Â Â Â }
+
+
+Â Â Â Â .preco small {
+
+Â Â Â Â Â Â display: block;
+
+Â Â Â Â Â Â font-size: 12px;
+
+Â Â Â Â Â Â font-weight: 600;
+
+Â Â Â Â Â Â color: var(--muted);
+
+Â Â Â Â Â Â margin-top: 4px;
+
+Â Â Â Â }
+
+
+Â Â Â Â .controls {
+
+Â Â Â Â Â Â display: grid;
+
+Â Â Â Â Â Â gap: 10px;
+
+Â Â Â Â }
+
+
+Â Â Â Â select,
+
+Â Â Â Â input {
+
+Â Â Â Â Â Â width: 100%;
+
+Â Â Â Â Â Â padding: 14px;
+
+Â Â Â Â Â Â border-radius: 14px;
+
+Â Â Â Â Â Â border: 1px solid #d8d8d8;
+
+Â Â Â Â Â Â background: #fff;
+
+Â Â Â Â Â Â outline: none;
+
+Â Â Â Â Â Â min-height: 48px;
+
+Â Â Â Â }
+
+
+Â Â Â Â select:focus,
+
+Â Â Â Â input:focus {
+
+Â Â Â Â Â Â border-color: var(--primary);
+
+Â Â Â Â Â Â box-shadow: 0 0 0 3px rgba(193, 18, 31, 0.12);
+
+Â Â Â Â }
+
+
+Â Â Â Â .btn-add {
+
+Â Â Â Â Â Â background: var(--primary);
+
+Â Â Â Â Â Â color: #fff;
+
+Â Â Â Â Â Â width: 100%;
+
+Â Â Â Â }
+
+
+Â Â Â Â .cart-fab,
+
+Â Â Â Â .whatsapp-fab {
+
+Â Â Â Â Â Â position: fixed;
+
+Â Â Â Â Â Â right: 14px;
+
+Â Â Â Â Â Â z-index: 20;
+
+Â Â Â Â Â Â border-radius: 999px;
+
+Â Â Â Â Â Â box-shadow: var(--shadow);
+
+Â Â Â Â Â Â text-decoration: none;
+
+Â Â Â Â Â Â font-weight: 800;
+
+Â Â Â Â Â Â display: inline-flex;
+
+Â Â Â Â Â Â align-items: center;
+
+Â Â Â Â Â Â justify-content: center;
+
+Â Â Â Â Â Â gap: 8px;
+
+Â Â Â Â Â Â min-height: 50px;
+
+Â Â Â Â Â Â padding: 14px 16px;
+
+Â Â Â Â }
+
+
+Â Â Â Â .cart-fab {
+
+Â Â Â Â Â Â bottom: 82px;
+
+Â Â Â Â Â Â background: var(--primary);
+
+Â Â Â Â Â Â color: #fff;
+
+Â Â Â Â Â Â border: 0;
+
+Â Â Â Â }
+
+
+Â Â Â Â .whatsapp-fab {
+
+Â Â Â Â Â Â bottom: 16px;
+
+Â Â Â Â Â Â background: #25d366;
+
+Â Â Â Â Â Â color: #fff;
+
+Â Â Â Â }
+
+
+Â Â Â Â .cart-count {
+
+Â Â Â Â Â Â min-width: 24px;
+
+Â Â Â Â Â Â height: 24px;
+
+Â Â Â Â Â Â padding: 0 8px;
+
+Â Â Â Â Â Â border-radius: 999px;
+
+Â Â Â Â Â Â background: #fff;
+
+Â Â Â Â Â Â color: var(--primary);
+
+Â Â Â Â Â Â font-size: 13px;
+
+Â Â Â Â Â Â display: inline-flex;
+
+Â Â Â Â Â Â align-items: center;
+
+Â Â Â Â Â Â justify-content: center;
+
+Â Â Â Â }
+
+
+Â Â Â Â .drawer {
+
+Â Â Â Â Â Â position: fixed;
+
+Â Â Â Â Â Â inset: 0;
+
+Â Â Â Â Â Â background: rgba(17, 17, 17, 0.55);
+
+Â Â Â Â Â Â display: none;
+
+Â Â Â Â Â Â align-items: center;
+
+Â Â Â Â Â Â justify-content: center;
+
+Â Â Â Â Â Â padding: 12px;
+
+Â Â Â Â Â Â z-index: 50;
+
+Â Â Â Â }
+
+
+Â Â Â Â .drawer.open {
+
+Â Â Â Â Â Â display: flex;
+
+Â Â Â Â }
+
+
+Â Â Â Â .drawer-panel {
+
+Â Â Â Â Â Â width: min(100%, 780px);
+
+Â Â Â Â Â Â max-height: 92vh;
+
+Â Â Â Â Â Â overflow: hidden;
+
+Â Â Â Â Â Â background: #fff;
+
+Â Â Â Â Â Â border-radius: 24px;
+
+Â Â Â Â Â Â box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+
+Â Â Â Â Â Â display: grid;
+
+Â Â Â Â Â Â grid-template-rows: auto 1fr auto;
+
+Â Â Â Â }
+
+
+Â Â Â Â .drawer-header,
+
+Â Â Â Â .drawer-footer {
+
+Â Â Â Â Â Â padding: 16px;
+
+Â Â Â Â Â Â border-bottom: 1px solid var(--border);
+
+Â Â Â Â }
+
+
+Â Â Â Â .drawer-footer {
+
+Â Â Â Â Â Â border-bottom: 0;
+
+Â Â Â Â Â Â border-top: 1px solid var(--border);
+
+Â Â Â Â Â Â display: grid;
+
+Â Â Â Â Â Â gap: 12px;
+
+Â Â Â Â }
+
+
+Â Â Â Â .drawer-header-row {
+
+Â Â Â Â Â Â display: flex;
+
+Â Â Â Â Â Â justify-content: space-between;
+
+Â Â Â Â Â Â align-items: center;
+
+Â Â Â Â Â Â gap: 10px;
+
+Â Â Â Â }
+
+
+Â Â Â Â .drawer-header h2 {
+
+Â Â Â Â Â Â margin: 0;
+
+Â Â Â Â Â Â font-size: 22px;
+
+Â Â Â Â }
+
+
+Â Â Â Â .drawer-close {
+
+Â Â Â Â Â Â background: #f3f4f6;
+
+Â Â Â Â Â Â color: #111;
+
+Â Â Â Â Â Â width: 42px;
+
+Â Â Â Â Â Â height: 42px;
+
+Â Â Â Â Â Â border-radius: 50%;
+
+Â Â Â Â Â Â border: 0;
+
+Â Â Â Â Â Â cursor: pointer;
+
+Â Â Â Â Â Â font-size: 22px;
+
+Â Â Â Â Â Â flex-shrink: 0;
+
+Â Â Â Â }
+
+
+Â Â Â Â .drawer-body {
+
+Â Â Â Â Â Â padding: 16px;
+
+Â Â Â Â Â Â overflow: auto;
+
+Â Â Â Â Â Â background: #fffdfd;
+
+Â Â Â Â Â Â -webkit-overflow-scrolling: touch;
+
+Â Â Â Â }
+
+
+Â Â Â Â .lista-vazia {
+
+Â Â Â Â Â Â text-align: center;
+
+Â Â Â Â Â Â color: var(--muted);
+
+Â Â Â Â Â Â padding: 26px 10px;
+
+Â Â Â Â Â Â border: 1px dashed #dadada;
+
+Â Â Â Â Â Â border-radius: 18px;
+
+Â Â Â Â Â Â background: #fff;
+
+Â Â Â Â }
+
+
+Â Â Â Â .item {
+
+Â Â Â Â Â Â display: grid;
+
+Â Â Â Â Â Â grid-template-columns: 76px 1fr auto;
+
+Â Â Â Â Â Â gap: 12px;
+
+Â Â Â Â Â Â background: #fff;
+
+Â Â Â Â Â Â border: 1px solid var(--border);
+
+Â Â Â Â Â Â border-radius: 18px;
+
+Â Â Â Â Â Â padding: 12px;
+
+Â Â Â Â Â Â align-items: center;
+
+Â Â Â Â Â Â margin-bottom: 12px;
+
+Â Â Â Â }
+
+
+Â Â Â Â .item img {
+
+Â Â Â Â Â Â width: 76px;
+
+Â Â Â Â Â Â height: 76px;
+
+Â Â Â Â Â Â object-fit: cover;
+
+Â Â Â Â Â Â border-radius: 14px;
+
+Â Â Â Â }
+
+
+Â Â Â Â .item-info b {
+
+Â Â Â Â Â Â display: block;
+
+Â Â Â Â Â Â font-size: 15px;
+
+Â Â Â Â Â Â margin-bottom: 5px;
+
+Â Â Â Â }
+
+
+Â Â Â Â .item-info span {
+
+Â Â Â Â Â Â display: block;
+
+Â Â Â Â Â Â color: var(--muted);
+
+Â Â Â Â Â Â font-size: 13px;
+
+Â Â Â Â Â Â line-height: 1.4;
+
+Â Â Â Â }
+
+
+Â Â Â Â .item-actions {
+
+Â Â Â Â Â Â display: flex;
+
+Â Â Â Â Â Â flex-direction: column;
+
+Â Â Â Â Â Â align-items: flex-end;
+
+Â Â Â Â Â Â gap: 8px;
+
+Â Â Â Â }
+
+
+Â Â Â Â .subtotal {
+
+Â Â Â Â Â Â font-size: 15px;
+
+Â Â Â Â Â Â font-weight: 800;
+
+Â Â Â Â Â Â color: var(--primary);
+
+Â Â Â Â }
+
+
+Â Â Â Â .btn-remove {
+
+Â Â Â Â Â Â background: #fff1f2;
+
+Â Â Â Â Â Â color: var(--primary);
+
+Â Â Â Â Â Â padding: 10px 12px;
+
+Â Â Â Â Â Â min-height: 42px;
+
+Â Â Â Â }
+
+
+Â Â Â Â .resumo {
+
+Â Â Â Â Â Â display: grid;
+
+Â Â Â Â Â Â grid-template-columns: 1fr auto;
+
+Â Â Â Â Â Â gap: 10px;
+
+Â Â Â Â Â Â align-items: center;
+
+Â Â Â Â }
+
+
+Â Â Â Â .total {
+
+Â Â Â Â Â Â font-size: 26px;
+
+Â Â Â Â Â Â font-weight: 900;
+
+Â Â Â Â Â Â color: var(--primary);
+
+Â Â Â Â }
+
+
+Â Â Â Â .pix-box {
+
+Â Â Â Â Â Â background: linear-gradient(135deg, var(--success) 0%, #21bf73 100%);
+
+Â Â Â Â Â Â color: #fff;
+
+Â Â Â Â Â Â padding: 16px;
+
+Â Â Â Â Â Â border-radius: 18px;
+
+Â Â Â Â Â Â display: grid;
+
+Â Â Â Â Â Â gap: 8px;
+
+Â Â Â Â }
+
+
+Â Â Â Â .pix-box h3,
+
+Â Â Â Â .pix-box p,
+
+Â Â Â Â .pix-box h4 {
+
+Â Â Â Â Â Â margin: 0;
+
+Â Â Â Â Â Â line-height: 1.35;
+
+Â Â Â Â }
+
+
+Â Â Â Â .pix-key {
+
+Â Â Â Â Â Â font-size: 22px;
+
+Â Â Â Â Â Â font-weight: 900;
+
+Â Â Â Â Â Â word-break: break-word;
+
+Â Â Â Â }
+
+
+Â Â Â Â .btn-pix {
+
+Â Â Â Â Â Â background: #fff;
+
+Â Â Â Â Â Â color: var(--success-dark);
+
+Â Â Â Â Â Â justify-self: start;
+
+Â Â Â Â }
+
+
+Â Â Â Â .footer-actions {
+
+Â Â Â Â Â Â display: grid;
+
+Â Â Â Â Â Â grid-template-columns: repeat(2, 1fr);
+
+Â Â Â Â Â Â gap: 10px;
+
+Â Â Â Â }
+
+
+Â Â Â Â .btn-outline {
+
+Â Â Â Â Â Â background: #fff;
+
+Â Â Â Â Â Â color: var(--primary);
+
+Â Â Â Â Â Â border: 1px solid rgba(193, 18, 31, 0.25);
+
+Â Â Â Â }
+
+
+Â Â Â Â .btn-whats {
+
+Â Â Â Â Â Â background: var(--primary);
+
+Â Â Â Â Â Â color: #fff;
+
+Â Â Â Â }
+
+
+Â Â Â Â .toast {
+
+Â Â Â Â Â Â position: fixed;
+
+Â Â Â Â Â Â top: 16px;
+
+Â Â Â Â Â Â left: 50%;
+
+Â Â Â Â Â Â transform: translateX(-50%) translateY(-15px);
+
+Â Â Â Â Â Â background: #111827;
+
+Â Â Â Â Â Â color: #fff;
+
+Â Â Â Â Â Â padding: 12px 16px;
+
+Â Â Â Â Â Â border-radius: 999px;
+
+Â Â Â Â Â Â box-shadow: var(--shadow);
+
+Â Â Â Â Â Â opacity: 0;
+
+Â Â Â Â Â Â pointer-events: none;
+
+Â Â Â Â Â Â transition: opacity 0.25s ease, transform 0.25s ease;
+
+Â Â Â Â Â Â z-index: 100;
+
+Â Â Â Â Â Â text-align: center;
+
+Â Â Â Â Â Â max-width: calc(100% - 24px);
+
+Â Â Â Â Â Â font-size: 14px;
+
+Â Â Â Â }
+
+
+Â Â Â Â .toast.show {
+
+Â Â Â Â Â Â opacity: 1;
+
+Â Â Â Â Â Â transform: translateX(-50%) translateY(0);
+
+Â Â Â Â }
+
+
+Â Â Â Â @media (max-width: 860px) {
+
+Â Â Â Â Â Â .hero-content {
+
+Â Â Â Â Â Â Â Â grid-template-columns: 1fr;
+
+Â Â Â Â Â Â Â Â text-align: center;
+
+Â Â Â Â Â Â Â Â justify-items: center;
+
+Â Â Â Â Â Â }
+
+
+Â Â Â Â Â Â .hero-actions {
+
+Â Â Â Â Â Â Â Â min-width: auto;
+
+Â Â Â Â Â Â Â Â width: 100%;
+
+Â Â Â Â Â Â Â Â max-width: 320px;
+
+Â Â Â Â Â Â }
+
+
+Â Â Â Â Â Â .section-head {
+
+Â Â Â Â Â Â Â Â flex-direction: column;
+
+Â Â Â Â Â Â Â Â align-items: flex-start;
+
+Â Â Â Â Â Â }
+
+Â Â Â Â }
+
+
+Â Â Â Â @media (max-width: 640px) {
+
+Â Â Â Â Â Â .container {
+
+Â Â Â Â Â Â Â Â width: min(100% - 16px, var(--container));
+
+Â Â Â Â Â Â }
+
+
+Â Â Â Â Â Â .hero {
+
+Â Â Â Â Â Â Â Â padding: 14px 0 18px;
+
+Â Â Â Â Â Â }
+
+
+Â Â Â Â Â Â .logo-badge {
+
+Â Â Â Â Â Â Â Â width: 84px;
+
+Â Â Â Â Â Â Â Â height: 84px;
+
+Â Â Â Â Â Â Â Â font-size: 28px;
+
+Â Â Â Â Â Â }
+
+
+Â Â Â Â Â Â .gallery-card {
+
+Â Â Â Â Â Â Â Â width: 180px;
+
+Â Â Â Â Â Â Â Â flex-basis: 180px;
+
+Â Â Â Â Â Â }
+
+
+Â Â Â Â Â Â .gallery-card img {
+
+Â Â Â Â Â Â Â Â height: 180px;
+
+Â Â Â Â Â Â }
+
+
+Â Â Â Â Â Â .produtos {
+
+Â Â Â Â Â Â Â Â grid-template-columns: 1fr;
+
+Â Â Â Â Â Â Â Â gap: 14px;
+
+Â Â Â Â Â Â }
+
+
+Â Â Â Â Â Â .card-media {
+
+Â Â Â Â Â Â Â Â height: 180px;
+
+Â Â Â Â Â Â }
+
+
+Â Â Â Â Â Â .drawer {
+
+Â Â Â Â Â Â Â Â padding: 0;
+
+Â Â Â Â Â Â }
+
+
+Â Â Â Â Â Â .drawer-panel {
+
+Â Â Â Â Â Â Â Â width: 100%;
+
+Â Â Â Â Â Â Â Â height: 100dvh;
+
+Â Â Â Â Â Â Â Â max-height: 100dvh;
+
+Â Â Â Â Â Â Â Â border-radius: 0;
+
+Â Â Â Â Â Â }
+
+
+Â Â Â Â Â Â .drawer-body {
+
+Â Â Â Â Â Â Â Â padding: 12px;
+
+Â Â Â Â Â Â }
+
+
+Â Â Â Â Â Â .item {
+
+Â Â Â Â Â Â Â Â grid-template-columns: 1fr;
+
+Â Â Â Â Â Â }
+
+
+Â Â Â Â Â Â .item img {
+
+Â Â Â Â Â Â Â Â width: 100%;
+
+Â Â Â Â Â Â Â Â height: 180px;
+
+Â Â Â Â Â Â }
+
+
+Â Â Â Â Â Â .item-actions {
+
+Â Â Â Â Â Â Â Â align-items: stretch;
+
+Â Â Â Â Â Â }
+
+
+Â Â Â Â Â Â .footer-actions {
+
+Â Â Â Â Â Â Â Â grid-template-columns: 1fr;
+
+Â Â Â Â Â Â }
+
+Â Â Â Â }
+
+Â Â </style>
+
 </head>
+
 <body>
-  <header class="hero">
-    <div class="container hero-content">
-      <div class="logo-badge">RD</div>
 
-      <div>
-        <h1>🌹 Rose Doces e Salgados</h1>
-        <p>Encomendas e delivery com praticidade, carinho e muito sabor.</p>
-      </div>
+Â Â <header class="hero">
 
-      <div class="hero-actions">
-        <button class="btn btn-primary" onclick="abrirCarrinho()">🛒 Ver carrinho</button>
-        <a class="btn btn-secondary" href="#cardapio">🍽️ Ver cardápio</a>
-      </div>
-    </div>
-  </header>
+Â Â Â Â <div class="container hero-content">
 
-  <main class="container">
-    <section class="galeria-section" id="galeria">
-      <div class="section-head">
-        <div>
-          <h2>Galeria de imagens</h2>
-          <p>Deslize para a direita ou esquerda para ver mais fotos. Já deixei 20 espaços reservados para adicionar novas imagens depois.</p>
-        </div>
-        <div class="badge-info">Fotos dos produtos</div>
-      </div>
+Â Â Â Â Â Â <div class="logo-badge">RD</div>
 
-      <div class="gallery-shell">
-        <div class="gallery-wrapper" id="galleryWrapper">
-          <div class="gallery-track" id="galleryTrack"></div>
-        </div>
 
-        <div class="gallery-nav">
-          <button type="button" onclick="rolarGaleria('left')" aria-label="Rolar galeria para a esquerda">‹</button>
-          <button type="button" onclick="rolarGaleria('right')" aria-label="Rolar galeria para a direita">›</button>
-        </div>
-      </div>
-    </section>
+Â Â Â Â Â Â <div>
 
-    <div class="section-head" id="cardapio">
-      <div>
-        <h2>Nosso cardápio</h2>
-        <p>Selecione os itens, adicione ao carrinho e finalize pelo WhatsApp.</p>
-      </div>
-      <div class="badge-info">Pagamento via PIX disponível</div>
-    </div>
+Â Â Â Â Â Â Â Â <h1>ðŸŒ¹ Rose Doces e Salgados</h1>
 
-    <section class="produtos" id="produtos"></section>
-  </main>
+Â Â Â Â Â Â Â Â <p>Encomendas e delivery com praticidade, carinho e muito sabor.</p>
 
-  <button class="cart-fab" onclick="abrirCarrinho()" aria-label="Abrir carrinho">
-    🛒 Carrinho
-    <span class="cart-count" id="cartCount">0</span>
-  </button>
+Â Â Â Â Â Â </div>
 
-  <a class="whatsapp-fab" href="https://wa.me/5547999117547" target="_blank" rel="noopener noreferrer">
-    📲 WhatsApp
-  </a>
 
-  <div class="drawer" id="carrinhoBox" aria-hidden="true">
-    <div class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="tituloCarrinho">
-      <div class="drawer-header">
-        <div class="drawer-header-row">
-          <h2 id="tituloCarrinho">🛒 Seu pedido</h2>
-          <button class="drawer-close" onclick="fecharCarrinho()">×</button>
-        </div>
-      </div>
+Â Â Â Â Â Â <div class="hero-actions">
 
-      <div class="drawer-body">
-        <div id="lista"></div>
-      </div>
+Â Â Â Â Â Â Â Â <button class="btn btn-primary" onclick="abrirCarrinho()">ðŸ›’ Ver carrinho</button>
 
-      <div class="drawer-footer">
-        <div class="resumo">
-          <div>
-            <strong>Total do pedido</strong>
-            <div style="color: var(--muted); font-size: 14px; margin-top: 4px;">Confira os itens antes de finalizar.</div>
-          </div>
-          <div class="total">R$ <span id="total">0,00</span></div>
-        </div>
+Â Â Â Â Â Â Â Â <a class="btn btn-secondary" href="#cardapio">ðŸ½ï¸ Ver cardÃ¡pio</a>
 
-        <div class="pix-box">
-          <h3>💚 Pagamento via PIX</h3>
-          <p>Chave PIX</p>
-          <div class="pix-key">47999117547</div>
-          <button class="btn btn-pix" onclick="copiarPix()">📋 Copiar chave PIX</button>
-          <h4>Após o pagamento, finalize seu pedido pelo WhatsApp.</h4>
-        </div>
+Â Â Â Â Â Â </div>
 
-        <input id="cliente" type="text" placeholder="Digite seu nome para finalizar" />
+Â Â Â Â </div>
 
-        <div class="footer-actions">
-          <button class="btn btn-outline" onclick="fecharCarrinho()">Continuar comprando</button>
-          <button class="btn btn-whats" onclick="enviarWhats()">Confirmar pedido e enviar no WhatsApp</button>
-        </div>
-      </div>
-    </div>
-  </div>
+Â Â </header>
 
-  <div class="toast" id="toast"></div>
 
-  <script>
-    const CHAVE_PIX = "47999117547";
-    const WHATSAPP_NUMERO = "5547999117547";
-    const moeda = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
+Â Â <main class="container">
 
-    const galeriaImagens = [
-      "https://dl.dropbox.com/scl/fi/lgc5b3a4ldk8jvo6grcg4/Screenshot_20260803-014505_WhatsApp.png?rlkey=cffeaxh7q90bs74ums7srbysy&st=iwhlggzk&dl=0",
-      "https://dl.dropbox.com/scl/fi/b51erki9t51ungy1c4lb7/Screenshot_20260803-014524_WhatsApp.png?rlkey=fprg0h1g4cu2la7qd45vquze7&st=6xyloxs4&dl=0",
-      "https://dl.dropbox.com/scl/fi/21j1oo6uy3xxsn8kule9h/Screenshot_20260803-014544_WhatsApp.png?rlkey=1xfst3unm1flbx9ac57my3nbo&st=vxlrqifk&dl=0",
-      "https://dl.dropbox.com/scl/fi/wuusn9nrqu7yok8l0i5sj/Screenshot_20260803-014559_WhatsApp.png?rlkey=7hda3jc7zivjbly0bkmfpj99h&st=5n6mai3f&dl=0",
-      "https://dl.dropbox.com/scl/fi/qmg0s2l6rxeacwz8cu6mm/Screenshot_20260803-014617_WhatsApp.png?rlkey=lmrczvx4mdx1p23zaq96ozlaq&st=se1vqtqj&dl=0",
-      "https://dl.dropbox.com/scl/fi/4rlks4j4blly9p49p5j5b/Screenshot_20260803-014638_WhatsApp.png?rlkey=ar7ohyalt7rzfiwocw3owk7vy&st=ilyqio5l&dl=0",
-      "https://dl.dropbox.com/scl/fi/k8mmwtc8vrivvmefspyk9/Screenshot_20260803-014715_WhatsApp.png?rlkey=pbvtbakmooejdx7ui7z7knbww&st=bphzwxi0&dl=0",
-      "https://dl.dropbox.com/scl/fi/5h3kfrw1f7i5di0gsyzbw/Screenshot_20260803-014751_WhatsApp.png?rlkey=0x7jsh1u1oqzilnww925hweoh&st=iyxmecox&dl=0",
-      "https://dl.dropbox.com/scl/fi/82870v6wg8c559l7ygnpi/Screenshot_20260803-014813_WhatsApp.png?rlkey=l19bmq70e4v4snddgcbdi54t0&st=hng9456e&dl=0",
-      "https://dl.dropbox.com/scl/fi/umysfrko8hj0llc20qx7v/Screenshot_20260803-053246_WhatsApp.png?rlkey=hvas5c0l5zi3xdpupp2l8svx0&st=sg9hmqor&dl=0",
-      "https://dl.dropbox.com/scl/fi/83l2ausciiml021gkmnxj/IMG-20260802-WA0140.jpg?rlkey=h7y9mwg0ni341w3tmnyspayo5&st=8ykc7uae&dl=0",
-      "https://dl.dropbox.com/scl/fi/ogle72ya1tms13o8uwfhf/FB_IMG_1768309712389.jpg?rlkey=jikxytcjs9n601r5rbb4lcaxx&st=191x83ut&dl=0",
-      "https://dl.dropbox.com/scl/fi/5vonjaw7ufki44l5ir9u6/IMG-20260802-WA0141.jpg?rlkey=o9r1evae81lkqgutjuioqvq1u&st=notrixrr&dl=0",
-    ];
+Â Â Â Â <section class="galeria-section" id="galeria">
 
-    const espacosExtrasGaleria = Array.from({ length: 20 }, (_, i) => ({
-      vazio: true,
-      titulo: `Espaço para nova foto ${i + 1}`
-    }));
+Â Â Â Â Â Â <div class="section-head">
 
-    const produtos = [
-      { nome: "Coxinha", valor: 0.85, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtmGiJ6ZyI3fWSw_fWL4oEoW1FYQtymCbBARuLQ3ko6Q&s=10", qtd: true, medida: "cento / festa" },
-      { nome: "Pastel", valor: 0.90, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs2p86_PaDbGypNkGgjZDWm1SBVj8fVPUOAUvENgP6hA&s=10", qtd: true, medida: "cento / festa" },
-      { nome: "Risoles de carne", valor: 0.85, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWLI3Pvsvt8ix09Lr9a3ztoCL9HELkMaOJ4bLVlm0wUA&s=10", qtd: true, medida: "cento / festa" },
-      { nome: "Risoles de presunto e queijo", valor: 0.85, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXlM0zeYdDOECGWKe7WFGGX6F6ZcQggdEmJXL5WcXTiQ&s=10", qtd: true, medida: "cento / festa" },
-      { nome: "Bolinha de queijo", valor: 0.90, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsDts9ca3TEpc2zg5obgaaAky-RN5SwjH3m8K2ER_wZg&s=10", qtd: true, medida: "cento / festa" },
-      { nome: "Empadinha de frango", valor: 1.20, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeJktlUUC2EH_OrEQqWBELdbkUnY9j6gvwd_HK9eQJ0w&s=10", qtd: true, medida: "cento / festa" },
-      { nome: "Empadão de frango cremoso 2kg", valor: 130, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFwtN_T9HixrVBtlw-p70GJb1knC-ogaz_jV2O9JsZbw&s=10", qtd: false, medida: "unidade" },
-      { nome: "Torta brigadeiro branco com chocolate 2kg", valor: 150, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8VigMyEFqyUOOYoxh_6qK3xDhevv7tUWVzgbbPdeRFA&s=10", qtd: false, medida: "unidade" },
-      { nome: "Mini pizza", valor: 1.10, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0Qh8qXqZq7Qv2W5o9Qj3x2Q0yH5v6Z9X7M8o3Jv9x&s=10", qtd: true, medida: "cento / festa" },
-      { nome: "Kibe", valor: 0.95, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1vQ9R2Hh8t8v9J0K1L2M3N4O5P6Q7R8S9T0U1V2W3&s=10", qtd: true, medida: "cento / festa" },
-      { nome: "Enroladinho de salsicha", valor: 0.95, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7Y6X5W4V3U2T1S0R9Q8P7O6N5M4L3K2J1I0H9G8F7&s=10", qtd: true, medida: "cento / festa" },
-      { nome: "Brigadeiro gourmet", valor: 1.50, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6T5R4Q3P2O1N0M9L8K7J6H5G4F3E2D1C0B9A8Z7Y6&s=10", qtd: true, medida: "cento / festa" },
-      { nome: "Beijinho", valor: 1.40, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5W4E3R2T1Y0U9I8O7P6L5K4J3H2G1F0D9S8A7Q6W5&s=10", qtd: true, medida: "cento / festa" },
-      { nome: "Quibe de forno", valor: 1.20, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4E3W2Q1A0S9D8F7G6H5J4K3L2M1N0P9O8I7U6Y5T4&s=10", qtd: true, medida: "cento / festa" },
-      { nome: "Torta salgada de frango", valor: 120, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3W2E1R0T9Y8U7I6O5P4L3K2J1H0G9F8D7S6A5Q4W3&s=10", qtd: false, medida: "unidade" },
-      { nome: "Bolo no pote", valor: 8.50, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2E1W0Q9A8S7D6F5G4H3J2K1L0M9N8P7O6I5U4Y3T2&s=10", qtd: false, medida: "unidade" },
-      { nome: "Pudim grande", valor: 35, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1W0E9R8T7Y6U5I4O3P2L1K0J9H8G7F6D5S4A3Q2W1&s=10", qtd: false, medida: "unidade" }
-    ];
+Â Â Â Â Â Â Â Â <div>
 
-    const carrinho = [];
-    const area = document.getElementById("produtos");
-    const lista = document.getElementById("lista");
-    const totalEl = document.getElementById("total");
-    const cartCountEl = document.getElementById("cartCount");
-    const carrinhoBox = document.getElementById("carrinhoBox");
-    const toastEl = document.getElementById("toast");
-    const galleryTrack = document.getElementById("galleryTrack");
-    const galleryWrapper = document.getElementById("galleryWrapper");
+Â Â Â Â Â Â Â Â Â Â <h2>Galeria de imagens</h2>
 
-    function mostrarToast(texto) {
-      toastEl.textContent = texto;
-      toastEl.classList.add("show");
-      clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2200);
-    }
+Â Â Â Â Â Â Â Â Â Â <p>Deslize para a direita ou esquerda para ver mais fotos. JÃ¡ deixei 20 espaÃ§os reservados para adicionar novas imagens depois.</p>
 
-    function renderGaleria() {
-      const itensGaleria = [
-        ...galeriaImagens.map((url, index) => ({ url, titulo: `Foto ${index + 1}` })),
-        ...espacosExtrasGaleria
-      ];
+Â Â Â Â Â Â Â Â </div>
 
-      galleryTrack.innerHTML = itensGaleria.map((item) => {
-        if (item.vazio) {
-          return `
-            <article class="gallery-card placeholder">
-              <div class="gallery-caption">📷 ${item.titulo}<br>Adicione uma nova imagem aqui depois.</div>
-            </article>
-          `;
-        }
+Â Â Â Â Â Â Â Â <div class="badge-info">Fotos dos produtos</div>
 
-        return `
-          <article class="gallery-card">
-            <img src="${item.url}" alt="${item.titulo}" loading="lazy" />
-            <div class="gallery-caption">${item.titulo}</div>
-          </article>
-        `;
-      }).join("");
-    }
+Â Â Â Â Â Â </div>
 
-    function rolarGaleria(direcao) {
-      const deslocamento = 260;
-      galleryWrapper.scrollBy({
-        left: direcao === 'right' ? deslocamento : -deslocamento,
-        behavior: 'smooth'
-      });
-    }
 
-    function criarOpcoesQuantidade(item, index) {
-      if (!item.qtd) return `<select id="q${index}"><option value="1">1 unidade</option></select>`;
-      const quantidades = [25, 50, 75, 100, 150, 200, 300];
-      return `<select id="q${index}">${quantidades.map(q => `<option value="${q}">${q} unidades</option>`).join("")}</select>`;
-    }
+Â Â Â Â Â Â <div class="gallery-shell">
 
-    function renderProdutos() {
-      area.innerHTML = produtos.map((p, i) => `
-        <article class="card">
-          <div class="card-media">
-            <img src="${p.img}" alt="${p.nome}" loading="lazy" />
-            <span class="tag">${p.qtd ? "Salgado" : "Especial"}</span>
-          </div>
-          <div class="card-body">
-            <h3>${p.nome}</h3>
-            <p class="preco">${moeda.format(p.valor)}<small>Preço por ${p.medida}</small></p>
-            <div class="controls">
-              ${criarOpcoesQuantidade(p, i)}
-              <button class="btn btn-add" onclick="add(${i})">Adicionar ao carrinho</button>
-            </div>
-          </div>
-        </article>
-      `).join("");
-    }
+Â Â Â Â Â Â Â Â <div class="gallery-wrapper" id="galleryWrapper">
 
-    function atualizarContador() {
-      const totalItens = carrinho.reduce((acc, item) => acc + item.qtd, 0);
-      cartCountEl.textContent = totalItens;
-    }
+Â Â Â Â Â Â Â Â Â Â <div class="gallery-track" id="galleryTrack"></div>
 
-    function add(i) {
-      const produto = produtos[i];
-      const qtd = Number(document.getElementById(`q${i}`).value);
-      const existente = carrinho.find(item => item.nome === produto.nome);
-      if (existente) existente.qtd += qtd; else carrinho.push({ nome: produto.nome, valor: produto.valor, qtd, img: produto.img, medida: produto.medida });
-      atualizarContador();
-      mostrar();
-      mostrarToast(`${produto.nome} adicionado ao carrinho.`);
-    }
+Â Â Â Â Â Â Â Â </div>
 
-    function abrirCarrinho() { carrinhoBox.classList.add("open"); carrinhoBox.setAttribute("aria-hidden", "false"); mostrar(); }
-    function fecharCarrinho() { carrinhoBox.classList.remove("open"); carrinhoBox.setAttribute("aria-hidden", "true"); }
-    function excluir(index) { carrinho.splice(index, 1); atualizarContador(); mostrar(); mostrarToast("Item removido do carrinho."); }
 
-    function mostrar() {
-      if (!carrinho.length) {
-        lista.innerHTML = `<div class="lista-vazia"><h3 style="margin-top:0;">Seu carrinho está vazio</h3><p>Adicione produtos do cardápio para continuar.</p></div>`;
-        totalEl.textContent = "0,00";
-        return;
-      }
-      let total = 0;
-      lista.innerHTML = carrinho.map((p, i) => {
-        const subtotal = p.valor * p.qtd; total += subtotal;
-        return `
-          <div class="item">
-            <img src="${p.img}" alt="${p.nome}" />
-            <div class="item-info">
-              <b>${p.nome}</b>
-              <span>Quantidade: ${p.qtd}</span>
-              <span>Preço unitário: ${moeda.format(p.valor)}</span>
-              <span>Subtotal: ${moeda.format(subtotal)}</span>
-            </div>
-            <div class="item-actions">
-              <div class="subtotal">${moeda.format(subtotal)}</div>
-              <button class="btn btn-remove" onclick="excluir(${i})">Excluir</button>
-            </div>
-          </div>
-        `;
-      }).join("");
-      totalEl.textContent = total.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    }
+Â Â Â Â Â Â Â Â <div class="gallery-nav">
 
-    function copiarPix() {
-      navigator.clipboard.writeText(CHAVE_PIX).then(() => mostrarToast(`Chave PIX copiada: ${CHAVE_PIX}`)).catch(() => mostrarToast("Não foi possível copiar automaticamente."));
-    }
+Â Â Â Â Â Â Â Â Â Â <button type="button" onclick="rolarGaleria('left')" aria-label="Rolar galeria para a esquerda">â€¹</button>
 
-    function enviarWhats() {
-      const nome = document.getElementById("cliente").value.trim();
-      if (!carrinho.length) return mostrarToast("Adicione produtos antes de finalizar.");
-      if (!nome) { mostrarToast("Digite seu nome para finalizar o pedido."); document.getElementById("cliente").focus(); return; }
-      if (!confirm("Confirmar pedido e enviar a lista para o WhatsApp?")) return;
+Â Â Â Â Â Â Â Â Â Â <button type="button" onclick="rolarGaleria('right')" aria-label="Rolar galeria para a direita">â€º</button>
 
-      let total = 0;
-      let mensagem = `🌹 Rose Doces e Salgados\n`;
-      mensagem += `Cliente: ${nome}\n\n`;
-      mensagem += `Pedido:\n`;
+Â Â Â Â Â Â Â Â </div>
 
-      carrinho.forEach((p) => {
-        const subtotal = p.valor * p.qtd;
-        total += subtotal;
-        mensagem += `• ${p.nome}\n`;
-        mensagem += `  Quantidade: ${p.qtd}\n`;
-        mensagem += `  Unitário: ${moeda.format(p.valor)}\n`;
-        mensagem += `  Subtotal: ${moeda.format(subtotal)}\n\n`;
-      });
+Â Â Â Â Â Â </div>
 
-      mensagem += `TOTAL: ${moeda.format(total)}\n\n`;
-      mensagem += `Entrega a combinar\n`;
-      mensagem += `Pagamento via PIX\n`;
-      mensagem += `Chave PIX: ${CHAVE_PIX}`;
+Â Â Â Â </section>
 
-      window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensagem)}`, "_blank");
-    }
 
-    carrinhoBox.addEventListener("click", (event) => { if (event.target === carrinhoBox) fecharCarrinho(); });
-    renderGaleria();
-    renderProdutos();
-    atualizarContador();
-    mostrar();
-  </script>
+Â Â Â Â <div class="section-head" id="cardapio">
+
+Â Â Â Â Â Â <div>
+
+Â Â Â Â Â Â Â Â <h2>Nosso cardÃ¡pio</h2>
+
+Â Â Â Â Â Â Â Â <p>Selecione os itens, adicione ao carrinho e finalize pelo WhatsApp.</p>
+
+Â Â Â Â Â Â </div>
+
+Â Â Â Â Â Â <div class="badge-info">Pagamento via PIX disponÃ­vel</div>
+
+Â Â Â Â </div>
+
+
+Â Â Â Â <section class="produtos" id="produtos"></section>
+
+Â Â </main>
+
+
+Â Â <button class="cart-fab" onclick="abrirCarrinho()" aria-label="Abrir carrinho">
+
+Â Â Â Â ðŸ›’ Carrinho
+
+Â Â Â Â <span class="cart-count" id="cartCount">0</span>
+
+Â Â </button>
+
+
+Â Â <a class="whatsapp-fab" href="https://wa.me/5547999117547" target="_blank" rel="noopener noreferrer">
+
+Â Â Â Â ðŸ“² WhatsApp
+
+Â Â </a>
+
+
+Â Â <div class="drawer" id="carrinhoBox" aria-hidden="true">
+
+Â Â Â Â <div class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="tituloCarrinho">
+
+Â Â Â Â Â Â <div class="drawer-header">
+
+Â Â Â Â Â Â Â Â <div class="drawer-header-row">
+
+Â Â Â Â Â Â Â Â Â Â <h2 id="tituloCarrinho">ðŸ›’ Seu pedido</h2>
+
+Â Â Â Â Â Â Â Â Â Â <button class="drawer-close" onclick="fecharCarrinho()">Ã—</button>
+
+Â Â Â Â Â Â Â Â </div>
+
+Â Â Â Â Â Â </div>
+
+
+Â Â Â Â Â Â <div class="drawer-body">
+
+Â Â Â Â Â Â Â Â <div id="lista"></div>
+
+Â Â Â Â Â Â </div>
+
+
+Â Â Â Â Â Â <div class="drawer-footer">
+
+Â Â Â Â Â Â Â Â <div class="resumo">
+
+Â Â Â Â Â Â Â Â Â Â <div>
+
+Â Â Â Â Â Â Â Â Â Â Â Â <strong>Total do pedido</strong>
+
+Â Â Â Â Â Â Â Â Â Â Â Â <div style="color: var(--muted); font-size: 14px; margin-top: 4px;">Confira os itens antes de finalizar.</div>
+
+Â Â Â Â Â Â Â Â Â Â </div>
+
+Â Â Â Â Â Â Â Â Â Â <div class="total">R$ <span id="total">0,00</span></div>
+
+Â Â Â Â Â Â Â Â </div>
+
+
+Â Â Â Â Â Â Â Â <div class="pix-box">
+
+Â Â Â Â Â Â Â Â Â Â <h3>ðŸ’š Pagamento via PIX</h3>
+
+Â Â Â Â Â Â Â Â Â Â <p>Chave PIX</p>
+
+Â Â Â Â Â Â Â Â Â Â <div class="pix-key">47999117547</div>
+
+Â Â Â Â Â Â Â Â Â Â <button class="btn btn-pix" onclick="copiarPix()">ðŸ“‹ Copiar chave PIX</button>
+
+Â Â Â Â Â Â Â Â Â Â <h4>ApÃ³s o pagamento, finalize seu pedido pelo WhatsApp.</h4>
+
+Â Â Â Â Â Â Â Â </div>
+
+
+Â Â Â Â Â Â Â Â <input id="cliente" type="text" placeholder="Digite seu nome para finalizar" />
+
+
+Â Â Â Â Â Â Â Â <div class="footer-actions">
+
+Â Â Â Â Â Â Â Â Â Â <button class="btn btn-outline" onclick="fecharCarrinho()">Continuar comprando</button>
+
+Â Â Â Â Â Â Â Â Â Â <button class="btn btn-whats" onclick="enviarWhats()">Confirmar pedido e enviar no WhatsApp</button>
+
+Â Â Â Â Â Â Â Â </div>
+
+Â Â Â Â Â Â </div>
+
+Â Â Â Â </div>
+
+Â Â </div>
+
+
+Â Â <div class="toast" id="toast"></div>
+
+
+Â Â <script>
+
+Â Â Â Â const CHAVE_PIX = "47999117547";
+
+Â Â Â Â const WHATSAPP_NUMERO = "5547999117547";
+
+Â Â Â Â const moeda = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
+
+
+Â Â Â Â const galeriaImagens = [
+
+Â Â Â Â Â Â "https://dl.dropbox.com/scl/fi/lgc5b3a4ldk8jvo6grcg4/Screenshot_20260803-014505_WhatsApp.png?rlkey=cffeaxh7q90bs74ums7srbysy&st=iwhlggzk&dl=0",
+
+Â Â Â Â Â Â "https://dl.dropbox.com/scl/fi/b51erki9t51ungy1c4lb7/Screenshot_20260803-014524_WhatsApp.png?rlkey=fprg0h1g4cu2la7qd45vquze7&st=6xyloxs4&dl=0",
+
+Â Â Â Â Â Â "https://dl.dropbox.com/scl/fi/21j1oo6uy3xxsn8kule9h/Screenshot_20260803-014544_WhatsApp.png?rlkey=1xfst3unm1flbx9ac57my3nbo&st=vxlrqifk&dl=0",
+
+Â Â Â Â Â Â "https://dl.dropbox.com/scl/fi/wuusn9nrqu7yok8l0i5sj/Screenshot_20260803-014559_WhatsApp.png?rlkey=7hda3jc7zivjbly0bkmfpj99h&st=5n6mai3f&dl=0",
+
+Â Â Â Â Â Â "https://dl.dropbox.com/scl/fi/qmg0s2l6rxeacwz8cu6mm/Screenshot_20260803-014617_WhatsApp.png?rlkey=lmrczvx4mdx1p23zaq96ozlaq&st=se1vqtqj&dl=0",
+
+Â Â Â Â Â Â "https://dl.dropbox.com/scl/fi/4rlks4j4blly9p49p5j5b/Screenshot_20260803-014638_WhatsApp.png?rlkey=ar7ohyalt7rzfiwocw3owk7vy&st=ilyqio5l&dl=0",
+
+Â Â Â Â Â Â "https://dl.dropbox.com/scl/fi/k8mmwtc8vrivvmefspyk9/Screenshot_20260803-014715_WhatsApp.png?rlkey=pbvtbakmooejdx7ui7z7knbww&st=bphzwxi0&dl=0",
+
+Â Â Â Â Â Â "https://dl.dropbox.com/scl/fi/5h3kfrw1f7i5di0gsyzbw/Screenshot_20260803-014751_WhatsApp.png?rlkey=0x7jsh1u1oqzilnww925hweoh&st=iyxmecox&dl=0",
+
+Â Â Â Â Â Â "https://dl.dropbox.com/scl/fi/82870v6wg8c559l7ygnpi/Screenshot_20260803-014813_WhatsApp.png?rlkey=l19bmq70e4v4snddgcbdi54t0&st=hng9456e&dl=0",
+
+Â Â Â Â Â Â "https://dl.dropbox.com/scl/fi/umysfrko8hj0llc20qx7v/Screenshot_20260803-053246_WhatsApp.png?rlkey=hvas5c0l5zi3xdpupp2l8svx0&st=sg9hmqor&dl=0",
+
+Â Â Â Â Â Â "https://dl.dropbox.com/scl/fi/83l2ausciiml021gkmnxj/IMG-20260802-WA0140.jpg?rlkey=h7y9mwg0ni341w3tmnyspayo5&st=8ykc7uae&dl=0",
+
+Â Â Â Â Â Â "https://dl.dropbox.com/scl/fi/ogle72ya1tms13o8uwfhf/FB_IMG_1768309712389.jpg?rlkey=jikxytcjs9n601r5rbb4lcaxx&st=191x83ut&dl=0",
+
+Â Â Â Â Â Â "https://dl.dropbox.com/scl/fi/5vonjaw7ufki44l5ir9u6/IMG-20260802-WA0141.jpg?rlkey=o9r1evae81lkqgutjuioqvq1u&st=notrixrr&dl=0",
+
+Â Â Â Â ];
+
+
+Â Â Â Â const espacosExtrasGaleria = Array.from({ length: 20 }, (_, i) => ({
+
+Â Â Â Â Â Â vazio: true,
+
+Â Â Â Â Â Â titulo: `EspaÃ§o para nova foto ${i + 1}`
+
+Â Â Â Â }));
+
+
+Â Â Â Â const produtos = [
+
+Â Â Â Â Â Â { nome: "Coxinha", valor: 0.90, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtmGiJ6ZyI3fWSw_fWL4oEoW1FYQtymCbBARuLQ3ko6Q&s=10", qtd: true, medida: "unidade" },
+
+Â Â Â Â Â Â { nome: "Risoles de carne", valor: 0.90, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWLI3Pvsvt8ix09Lr9a3ztoCL9HELkMaOJ4bLVlm0wUA&s=10", qtd: true, medida: "unidade" },
+
+Â Â Â Â Â Â { nome: "Risoles de presunto e queijo", valor: 0.90, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXlM0zeYdDOECGWKe7WFGGX6F6ZcQggdEmJXL5WcXTiQ&s=10", qtd: true, medida: "unidade" },
+
+Â Â Â Â Â Â { nome: "Bolinha de queijo", valor: 0.90, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsDts9ca3TEpc2zg5obgaaAky-RN5SwjH3m8K2ER_wZg&s=10", qtd: true, medida: "unidade" },
+
+Â Â Â Â Â Â { nome: "Pastel", valor: 0.90, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs2p86_PaDbGypNkGgjZDWm1SBVj8fVPUOAUvENgP6hA&s=10", qtd: true, medida: "unidade" },
+
+
+Â Â Â Â Â Â // ===== ESPAÃ‡O PARA ADICIONAR NOVOS PRODUTOS =====
+
+Â Â Â Â Â Â // Copie o modelo abaixo, retire o // do inÃ­cio de cada linha e altere os dados.
+
+Â Â Â Â Â Â // IMPORTANTE: coloque uma vÃ­rgula depois do produto anterior antes de adicionar outro.
+
+Â Â Â Â Â Â // {
+
+Â Â Â Â Â Â // Â  nome: "Nome do produto",
+
+Â Â Â Â Â Â // Â  valor: 0.00,
+
+Â Â Â Â Â Â // Â  img: "COLE_AQUI_O_LINK_DA_IMAGEM",
+
+Â Â Â Â Â Â // Â  qtd: true,
+
+Â Â Â Â Â Â // Â  medida: "unidade"
+
+Â Â Â Â Â Â // },
+
+Â Â Â Â Â Â // ===== FIM DO ESPAÃ‡O PARA NOVOS PRODUTOS =====
+
+Â Â Â Â ];
+
+
+Â Â Â Â const carrinho = [];
+
+Â Â Â Â const area = document.getElementById("produtos");
+
+Â Â Â Â const lista = document.getElementById("lista");
+
+Â Â Â Â const totalEl = document.getElementById("total");
+
+Â Â Â Â const cartCountEl = document.getElementById("cartCount");
+
+Â Â Â Â const carrinhoBox = document.getElementById("carrinhoBox");
+
+Â Â Â Â const toastEl = document.getElementById("toast");
+
+Â Â Â Â const galleryTrack = document.getElementById("galleryTrack");
+
+Â Â Â Â const galleryWrapper = document.getElementById("galleryWrapper");
+
+
+Â Â Â Â function mostrarToast(texto) {
+
+Â Â Â Â Â Â toastEl.textContent = texto;
+
+Â Â Â Â Â Â toastEl.classList.add("show");
+
+Â Â Â Â Â Â clearTimeout(window.__toastTimer);
+
+Â Â Â Â Â Â window.__toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2200);
+
+Â Â Â Â }
+
+
+Â Â Â Â function renderGaleria() {
+
+Â Â Â Â Â Â const itensGaleria = [
+
+Â Â Â Â Â Â Â Â ...galeriaImagens.map((url, index) => ({ url, titulo: `Foto ${index + 1}` })),
+
+Â Â Â Â Â Â Â Â ...espacosExtrasGaleria
+
+Â Â Â Â Â Â ];
+
+
+Â Â Â Â Â Â galleryTrack.innerHTML = itensGaleria.map((item) => {
+
+Â Â Â Â Â Â Â Â if (item.vazio) {
+
+Â Â Â Â Â Â Â Â Â Â return `
+
+Â Â Â Â Â Â Â Â Â Â Â Â <article class="gallery-card placeholder">
+
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â <div class="gallery-caption">ðŸ“· ${item.titulo}<br>Adicione uma nova imagem aqui depois.</div>
+
+Â Â Â Â Â Â Â Â Â Â Â Â </article>
+
+Â Â Â Â Â Â Â Â Â Â `;
+
+Â Â Â Â Â Â Â Â }
+
+
+Â Â Â Â Â Â Â Â return `
+
+Â Â Â Â Â Â Â Â Â Â <article class="gallery-card">
+
+Â Â Â Â Â Â Â Â Â Â Â Â <img src="${item.url}" alt="${item.titulo}" loading="lazy" />
+
+Â Â Â Â Â Â Â Â Â Â Â Â <div class="gallery-caption">${item.titulo}</div>
+
+Â Â Â Â Â Â Â Â Â Â </article>
+
+Â Â Â Â Â Â Â Â `;
+
+Â Â Â Â Â Â }).join("");
+
+Â Â Â Â }
+
+
+Â Â Â Â function rolarGaleria(direcao) {
+
+Â Â Â Â Â Â const deslocamento = 260;
+
+Â Â Â Â Â Â galleryWrapper.scrollBy({
+
+Â Â Â Â Â Â Â Â left: direcao === 'right' ? deslocamento : -deslocamento,
+
+Â Â Â Â Â Â Â Â behavior: 'smooth'
+
+Â Â Â Â Â Â });
+
+Â Â Â Â }
+
+
+Â Â Â Â function criarOpcoesQuantidade(item, index) {
+
+Â Â Â Â Â Â if (!item.qtd) return `<select id="q${index}"><option value="1">1 unidade</option></select>`;
+
+Â Â Â Â Â Â const quantidades = [25, 50, 75, 100, 150, 200, 300];
+
+Â Â Â Â Â Â return `<select id="q${index}">${quantidades.map(q => `<option value="${q}">${q} unidades</option>`).join("")}</select>`;
+
+Â Â Â Â }
+
+
+Â Â Â Â function renderProdutos() {
+
+Â Â Â Â Â Â area.innerHTML = produtos.map((p, i) => `
+
+Â Â Â Â Â Â Â Â <article class="card">
+
+Â Â Â Â Â Â Â Â Â Â <div class="card-media">
+
+Â Â Â Â Â Â Â Â Â Â Â Â <img src="${p.img}" alt="${p.nome}" loading="lazy" />
+
+Â Â Â Â Â Â Â Â Â Â Â Â <span class="tag">${p.qtd ? "Salgado" : "Especial"}</span>
+
+Â Â Â Â Â Â Â Â Â Â </div>
+
+Â Â Â Â Â Â Â Â Â Â <div class="card-body">
+
+Â Â Â Â Â Â Â Â Â Â Â Â <h3>${p.nome}</h3>
+
+Â Â Â Â Â Â Â Â Â Â Â Â <p class="preco">${moeda.format(p.valor)}<small>PreÃ§o por ${p.medida}</small></p>
+
+Â Â Â Â Â Â Â Â Â Â Â Â <div class="controls">
+
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â ${criarOpcoesQuantidade(p, i)}
+
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â <button class="btn btn-add" onclick="add(${i})">Adicionar ao carrinho</button>
+
+Â Â Â Â Â Â Â Â Â Â Â Â </div>
+
+Â Â Â Â Â Â Â Â Â Â </div>
+
+Â Â Â Â Â Â Â Â </article>
+
+Â Â Â Â Â Â `).join("");
+
+Â Â Â Â }
+
+
+Â Â Â Â function atualizarContador() {
+
+Â Â Â Â Â Â const totalItens = carrinho.reduce((acc, item) => acc + item.qtd, 0);
+
+Â Â Â Â Â Â cartCountEl.textContent = totalItens;
+
+Â Â Â Â }
+
+
+Â Â Â Â function add(i) {
+
+Â Â Â Â Â Â const produto = produtos[i];
+
+Â Â Â Â Â Â const qtd = Number(document.getElementById(`q${i}`).value);
+
+Â Â Â Â Â Â const existente = carrinho.find(item => item.nome === produto.nome);
+
+Â Â Â Â Â Â if (existente) existente.qtd += qtd; else carrinho.push({ nome: produto.nome, valor: produto.valor, qtd, img: produto.img, medida: produto.medida });
+
+Â Â Â Â Â Â atualizarContador();
+
+Â Â Â Â Â Â mostrar();
+
+Â Â Â Â Â Â mostrarToast(`${produto.nome} adicionado ao carrinho.`);
+
+Â Â Â Â }
+
+
+Â Â Â Â function abrirCarrinho() { carrinhoBox.classList.add("open"); carrinhoBox.setAttribute("aria-hidden", "false"); mostrar(); }
+
+Â Â Â Â function fecharCarrinho() { carrinhoBox.classList.remove("open"); carrinhoBox.setAttribute("aria-hidden", "true"); }
+
+Â Â Â Â function excluir(index) { carrinho.splice(index, 1); atualizarContador(); mostrar(); mostrarToast("Item removido do carrinho."); }
+
+
+Â Â Â Â function mostrar() {
+
+Â Â Â Â Â Â if (!carrinho.length) {
+
+Â Â Â Â Â Â Â Â lista.innerHTML = `<div class="lista-vazia"><h3 style="margin-top:0;">Seu carrinho estÃ¡ vazio</h3><p>Adicione produtos do cardÃ¡pio para continuar.</p></div>`;
+
+Â Â Â Â Â Â Â Â totalEl.textContent = "0,00";
+
+Â Â Â Â Â Â Â Â return;
+
+Â Â Â Â Â Â }
+
+Â Â Â Â Â Â let total = 0;
+
+Â Â Â Â Â Â lista.innerHTML = carrinho.map((p, i) => {
+
+Â Â Â Â Â Â Â Â const subtotal = p.valor * p.qtd; total += subtotal;
+
+Â Â Â Â Â Â Â Â return `
+
+Â Â Â Â Â Â Â Â Â Â <div class="item">
+
+Â Â Â Â Â Â Â Â Â Â Â Â <img src="${p.img}" alt="${p.nome}" />
+
+Â Â Â Â Â Â Â Â Â Â Â Â <div class="item-info">
+
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â <b>${p.nome}</b>
+
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â <span>Quantidade: ${p.qtd}</span>
+
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â <span>PreÃ§o unitÃ¡rio: ${moeda.format(p.valor)}</span>
+
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â <span>Subtotal: ${moeda.format(subtotal)}</span>
+
+Â Â Â Â Â Â Â Â Â Â Â Â </div>
+
+Â Â Â Â Â Â Â Â Â Â Â Â <div class="item-actions">
+
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â <div class="subtotal">${moeda.format(subtotal)}</div>
+
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â <button class="btn btn-remove" onclick="excluir(${i})">Excluir</button>
+
+Â Â Â Â Â Â Â Â Â Â Â Â </div>
+
+Â Â Â Â Â Â Â Â Â Â </div>
+
+Â Â Â Â Â Â Â Â `;
+
+Â Â Â Â Â Â }).join("");
+
+Â Â Â Â Â Â totalEl.textContent = total.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+Â Â Â Â }
+
+
+Â Â Â Â function copiarPix() {
+
+Â Â Â Â Â Â navigator.clipboard.writeText(CHAVE_PIX).then(() => mostrarToast(`Chave PIX copiada: ${CHAVE_PIX}`)).catch(() => mostrarToast("NÃ£o foi possÃ­vel copiar automaticamente."));
+
+Â Â Â Â }
+
+
+Â Â Â Â function enviarWhats() {
+
+Â Â Â Â Â Â const nome = document.getElementById("cliente").value.trim();
+
+Â Â Â Â Â Â if (!carrinho.length) return mostrarToast("Adicione produtos antes de finalizar.");
+
+Â Â Â Â Â Â if (!nome) { mostrarToast("Digite seu nome para finalizar o pedido."); document.getElementById("cliente").focus(); return; }
+
+Â Â Â Â Â Â if (!confirm("Confirmar pedido e enviar a lista para o WhatsApp?")) return;
+
+
+Â Â Â Â Â Â let total = 0;
+
+Â Â Â Â Â Â let mensagem = `ðŸŒ¹ Rose Doces e Salgados\n`;
+
+Â Â Â Â Â Â mensagem += `Cliente: ${nome}\n\n`;
+
+Â Â Â Â Â Â mensagem += `Pedido:\n`;
+
+
+Â Â Â Â Â Â carrinho.forEach((p) => {
+
+Â Â Â Â Â Â Â Â const subtotal = p.valor * p.qtd;
+
+Â Â Â Â Â Â Â Â total += subtotal;
+
+Â Â Â Â Â Â Â Â mensagem += `â€¢ ${p.nome}\n`;
+
+Â Â Â Â Â Â Â Â mensagem += `Â  Quantidade: ${p.qtd}\n`;
+
+Â Â Â Â Â Â Â Â mensagem += `Â  UnitÃ¡rio: ${moeda.format(p.valor)}\n`;
+
+Â Â Â Â Â Â Â Â mensagem += `Â  Subtotal: ${moeda.format(subtotal)}\n\n`;
+
+Â Â Â Â Â Â });
+
+
+Â Â Â Â Â Â mensagem += `TOTAL: ${moeda.format(total)}\n\n`;
+
+Â Â Â Â Â Â mensagem += `Entrega a combinar\n`;
+
+Â Â Â Â Â Â mensagem += `Pagamento via PIX\n`;
+
+Â Â Â Â Â Â mensagem += `Chave PIX: ${CHAVE_PIX}`;
+
+
+Â Â Â Â Â Â window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensagem)}`, "_blank");
+
+Â Â Â Â }
+
+l
+
+Â Â Â Â carrinhoBox.addEventListener("click", (event) => { if (event.target === carrinhoBox) fecharCarrinho(); });
+
+Â Â Â Â renderGaleria();
+
+Â Â Â Â renderProdutos();
+
+Â Â Â Â atualizarContador();
+
+Â Â Â Â mostrar();
+
+Â Â </script>
+
 </body>
+
 </html>
