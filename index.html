@@ -676,33 +676,100 @@
         grid-template-columns: 1fr;
       }
     }
+
+    /* Layout de cardÃ¡pio delivery */
+    :root { --primary: #d42236; --primary-dark: #a81629; --accent: #f5b6be; --border: #ece8e7; --radius: 16px; --container: 1100px; --shadow: 0 3px 14px rgba(48,24,28,.07); }
+    body { background: #f7f7f7; }
+    .container { width: min(100% - 32px, var(--container)); }
+    .hero { background: #fff; color: var(--text); padding: 22px 0; box-shadow: none; border-top: 6px solid var(--primary); border-bottom: 1px solid var(--border); }
+    .hero-content { grid-template-columns: 90px 1fr auto; gap: 18px; }
+    .logo-badge { width: 90px; height: 90px; border-radius: 18px; background: #fff1f2; border: 1px solid #f6d4da; font-size: 42px; backdrop-filter: none; }
+    .eyebrow { font-size: 11px; color: var(--primary); letter-spacing: .12em; font-weight: 800; margin-bottom: 6px; }
+    .hero h1 { font-size: clamp(24px, 4vw, 34px); margin: 0 0 5px; }
+    .hero p { color: #676767; font-size: 14px; }
+    .store-meta { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 13px; color: #6a6868; font-size: 13px; }
+    .header-cart { border: 1px solid #f0c9ce; background: #fff3f4; color: var(--primary-dark); border-radius: 12px; padding: 12px 16px; font-weight: 700; cursor: pointer; }
+    .delivery-tools { margin-top: 22px; }
+    .search-box { display: flex; align-items: center; gap: 8px; background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 0 14px; font-size: 28px; color: #999; }
+    .search-box input { border: 0; box-shadow: none; padding: 14px 4px; min-height: 52px; font-size: 15px; }
+    .search-box input:focus { box-shadow: none; }
+    .category-nav { display: flex; overflow-x: auto; gap: 8px; padding: 14px 0 3px; }
+    .category-chip { flex: 0 0 auto; border: 1px solid #e9dfdf; border-radius: 999px; background: #fff; padding: 10px 16px; color: #515151; font-weight: 700; cursor: pointer; }
+    .category-chip.active { background: var(--primary); color: white; border-color: var(--primary); }
+    .galeria-section { padding-top: 10px; }
+    .section-head { padding: 20px 0 12px; }
+    .section-head h2 { font-size: 23px; }
+    .gallery-card { width: 170px; flex-basis: 170px; border-radius: 14px; }
+    .gallery-card img { height: 145px; }
+    .gallery-card.placeholder { min-height: 190px; }
+    .produtos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .card { display: grid; grid-template-columns: 145px minmax(0,1fr); border: 1px solid var(--border); border-radius: 14px; box-shadow: none; }
+    .card[hidden], .empty-search[hidden] { display: none !important; }
+    .card-media { height: 100%; min-height: 170px; }
+    .card-media img { height: 100%; }
+    .tag { top: 8px; left: 8px; padding: 5px 8px; }
+    .card-body { padding: 14px; min-width: 0; }
+    .card h3 { font-size: 17px; }
+    .preco { font-size: 20px; margin-bottom: 8px; }
+    .controls { grid-template-columns: minmax(90px, 1fr) auto; gap: 7px; }
+    .controls select { min-height: 41px; padding: 6px; border-radius: 9px; font-size: 13px; }
+    .btn-add { width: auto; min-height: 41px; padding: 8px 12px; border-radius: 9px; font-size: 13px; }
+    .empty-search { text-align: center; padding: 25px; color: var(--muted); }
+    @media (max-width: 850px) { .produtos { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) {
+      .container { width: min(100% - 24px, var(--container)); }
+      .hero { padding: 16px 0; }
+      .hero-content { grid-template-columns: 64px 1fr; gap: 12px; }
+      .logo-badge { width: 64px; height: 64px; font-size: 30px; }
+      .hero h1 { font-size: 21px; }
+      .hero p { font-size: 12px; }
+      .store-meta { margin-top: 8px; font-size: 11px; }
+      .header-cart { display: none; }
+      .section-head { flex-direction: row; align-items: center; }
+      .section-head h2 { font-size: 20px; }
+      .badge-info { display: none; }
+      .card { grid-template-columns: 105px minmax(0,1fr); }
+      .card-media { height: 100%; min-height: 138px; }
+      .card-body { padding: 10px; }
+      .card h3 { font-size: 16px; margin-bottom: 5px; }
+      .preco { font-size: 18px; margin-bottom: 8px; }
+      .preco small { font-size: 11px; }
+      .controls { grid-template-columns: 1fr; gap: 6px; }
+      .btn-add { width: 100%; }
+      .item { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
   <header class="hero">
     <div class="container hero-content">
-      <div class="logo-badge">RD</div>
-
-      <div>
-        <h1>🌹 Rose Doces e Salgados</h1>
-        <p>Encomendas e delivery com praticidade, carinho e muito sabor.</p>
+      <div class="logo-badge" aria-hidden="true">ðŸŒ¹</div>
+      <div class="store-details">
+        <div class="eyebrow">DELIVERY E ENCOMENDAS</div>
+        <h1>Rose Doces e Salgados</h1>
+        <p>Doces e salgados feitos com carinho em Joinville</p>
+        <div class="store-meta"><span>ðŸ“ Joinville, SC</span><span>ðŸ›ï¸ PeÃ§a pelo WhatsApp</span></div>
       </div>
-
-      <div class="hero-actions">
-        <button class="btn btn-primary" onclick="abrirCarrinho()">🛒 Ver carrinho</button>
-        <a class="btn btn-secondary" href="#cardapio">🍽️ Ver cardápio</a>
-      </div>
+      <button class="header-cart" onclick="abrirCarrinho()" aria-label="Abrir carrinho">ðŸ›’ <span>Meu pedido</span></button>
     </div>
   </header>
 
   <main class="container">
+    <div class="delivery-tools">
+      <label class="search-box">âŒ• <input id="buscaProduto" type="search" placeholder="Buscar no cardÃ¡pio" aria-label="Buscar produtos" /></label>
+      <nav class="category-nav" aria-label="Categorias do cardÃ¡pio">
+        <button class="category-chip active" type="button" data-filter="todos">Todos</button>
+        <button class="category-chip" type="button" data-filter="salgados">Salgados</button>
+        <button class="category-chip" type="button" data-filter="doces">Doces e sobremesas</button>
+      </nav>
+    </div>
     <section class="galeria-section" id="galeria">
       <div class="section-head">
         <div>
-          <h2>Galeria de imagens</h2>
-          <p>Deslize para a direita ou esquerda para ver mais fotos. Já deixei 20 espaços reservados para adicionar novas imagens depois.</p>
+          <h2>Vitrine de delÃ­cias</h2>
+          <p>Confira algumas fotos dos nossos produtos.</p>
         </div>
-        <div class="badge-info">Fotos dos produtos</div>
+        
       </div>
 
       <div class="gallery-shell">
@@ -711,38 +778,39 @@
         </div>
 
         <div class="gallery-nav">
-          <button type="button" onclick="rolarGaleria('left')" aria-label="Rolar galeria para a esquerda">‹</button>
-          <button type="button" onclick="rolarGaleria('right')" aria-label="Rolar galeria para a direita">›</button>
+          <button type="button" onclick="rolarGaleria('left')" aria-label="Rolar galeria para a esquerda">â€¹</button>
+          <button type="button" onclick="rolarGaleria('right')" aria-label="Rolar galeria para a direita">â€º</button>
         </div>
       </div>
     </section>
 
     <div class="section-head" id="cardapio">
       <div>
-        <h2>Nosso cardápio</h2>
-        <p>Selecione os itens, adicione ao carrinho e finalize pelo WhatsApp.</p>
+        <h2>Nosso cardÃ¡pio</h2>
+        <p>Escolha seus favoritos e envie o pedido pelo WhatsApp.</p>
       </div>
-      <div class="badge-info">Pagamento via PIX disponível</div>
+      <div class="badge-info">ðŸ’š PIX disponÃ­vel</div>
     </div>
 
     <section class="produtos" id="produtos"></section>
+    <p class="empty-search" id="buscaVazia" hidden>Nenhum produto encontrado. Tente outra busca.</p>
   </main>
 
   <button class="cart-fab" onclick="abrirCarrinho()" aria-label="Abrir carrinho">
-    🛒 Carrinho
+    ðŸ›’ Carrinho
     <span class="cart-count" id="cartCount">0</span>
   </button>
 
   <a class="whatsapp-fab" href="https://wa.me/5547999117547" target="_blank" rel="noopener noreferrer">
-    📲 WhatsApp
+    ðŸ“² WhatsApp
   </a>
 
   <div class="drawer" id="carrinhoBox" aria-hidden="true">
     <div class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="tituloCarrinho">
       <div class="drawer-header">
         <div class="drawer-header-row">
-          <h2 id="tituloCarrinho">🛒 Seu pedido</h2>
-          <button class="drawer-close" onclick="fecharCarrinho()">×</button>
+          <h2 id="tituloCarrinho">ðŸ›’ Seu pedido</h2>
+          <button class="drawer-close" onclick="fecharCarrinho()">Ã—</button>
         </div>
       </div>
 
@@ -760,11 +828,11 @@
         </div>
 
         <div class="pix-box">
-          <h3>💚 Pagamento via PIX</h3>
+          <h3>ðŸ’š Pagamento via PIX</h3>
           <p>Chave PIX</p>
           <div class="pix-key">47999117547</div>
-          <button class="btn btn-pix" onclick="copiarPix()">📋 Copiar chave PIX</button>
-          <h4>Após o pagamento, finalize seu pedido pelo WhatsApp.</h4>
+          <button class="btn btn-pix" onclick="copiarPix()">ðŸ“‹ Copiar chave PIX</button>
+          <h4>ApÃ³s o pagamento, finalize seu pedido pelo WhatsApp.</h4>
         </div>
 
         <input id="cliente" type="text" placeholder="Digite seu nome para finalizar" />
@@ -802,20 +870,20 @@
 
     const espacosExtrasGaleria = Array.from({ length: 20 }, (_, i) => ({
       vazio: true,
-      titulo: `Espaço para nova foto ${i + 1}`
+      titulo: `EspaÃ§o para nova foto ${i + 1}`
     }));
 
     const produtos = [
-      { nome: "Coxinha", valor: 0.90, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtmGiJ6ZyI3fWSw_fWL4oEoW1FYQtymCbBARuLQ3ko6Q&s=10", qtd: true, medida: "cento / festa" },
+      { nome: "Coxinha", valor: 0.85, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtmGiJ6ZyI3fWSw_fWL4oEoW1FYQtymCbBARuLQ3ko6Q&s=10", qtd: true, medida: "cento / festa" },
       { nome: "Pastel", valor: 0.90, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs2p86_PaDbGypNkGgjZDWm1SBVj8fVPUOAUvENgP6hA&s=10", qtd: true, medida: "cento / festa" },
-      { nome: "Risoles de carne", valor: 0.90, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWLI3Pvsvt8ix09Lr9a3ztoCL9HELkMaOJ4bLVlm0wUA&s=10", qtd: true, medida: "cento / festa" },
-      { nome: "Risoles de presunto e queijo", valor: 0.90, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXlM0zeYdDOECGWKe7WFGGX6F6ZcQggdEmJXL5WcXTiQ&s=10", qtd: true, medida: "cento / festa" },
+      { nome: "Risoles de carne", valor: 0.85, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWLI3Pvsvt8ix09Lr9a3ztoCL9HELkMaOJ4bLVlm0wUA&s=10", qtd: true, medida: "cento / festa" },
+      { nome: "Risoles de presunto e queijo", valor: 0.85, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXlM0zeYdDOECGWKe7WFGGX6F6ZcQggdEmJXL5WcXTiQ&s=10", qtd: true, medida: "cento / festa" },
       { nome: "Bolinha de queijo", valor: 0.90, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsDts9ca3TEpc2zg5obgaaAky-RN5SwjH3m8K2ER_wZg&s=10", qtd: true, medida: "unidade" },
       { nome: "Mini pizza", valor: 1.10, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0Qh8qXqZq7Qv2W5o9Qj3x2Q0yH5v6Z9X7M8o3Jv9x&s=10", qtd: true, medida: "cento / festa" },
-      { nome: "Enroladinho de salsicha", valor: 0.90, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7Y6X5W4V3U2T1S0R9Q8P7O6N5M4L3K2J1I0H9G8F7&s=10", qtd: true, medida: "cento / festa" },
-      { nome: "Brigadeiro tradicional", valor: 0.90, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6T5R4Q3P2O1N0M9L8K7J6H5G4F3E2D1C0B9A8Z7Y6&s=10", qtd: true, medida: "cento / festa" },
-      { nome: "Beijinho", valor: 0.90, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5W4E3R2T1Y0U9I8O7P6L5K4J3H2G1F0D9S8A7Q6W5&s=10", qtd: true, medida: "cento / festa" },
-      { nome: "Pudim grande", valor: 75, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1W0E9R8T7Y6U5I4O3P2L1K0J9H8G7F6D5S4A3Q2W1&s=10", qtd: false, medida: "unidade" }
+      { nome: "Enroladinho de salsicha", valor: 0.95, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7Y6X5W4V3U2T1S0R9Q8P7O6N5M4L3K2J1I0H9G8F7&s=10", qtd: true, medida: "cento / festa" },
+      { nome: "Brigadeiro gourmet", valor: 1.50, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6T5R4Q3P2O1N0M9L8K7J6H5G4F3E2D1C0B9A8Z7Y6&s=10", qtd: true, medida: "cento / festa" },
+      { nome: "Beijinho", valor: 1.40, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5W4E3R2T1Y0U9I8O7P6L5K4J3H2G1F0D9S8A7Q6W5&s=10", qtd: true, medida: "cento / festa" },
+      { nome: "Pudim grande", valor: 35, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1W0E9R8T7Y6U5I4O3P2L1K0J9H8G7F6D5S4A3Q2W1&s=10", qtd: false, medida: "unidade" }
     ];
 
     const carrinho = [];
@@ -845,7 +913,7 @@
         if (item.vazio) {
           return `
             <article class="gallery-card placeholder">
-              <div class="gallery-caption">📷 ${item.titulo}<br>Adicione uma nova imagem aqui depois.</div>
+              <div class="gallery-caption">ðŸ“· ${item.titulo}<br>Adicione uma nova imagem aqui depois.</div>
             </article>
           `;
         }
@@ -878,11 +946,11 @@
         <article class="card">
           <div class="card-media">
             <img src="${p.img}" alt="${p.nome}" loading="lazy" />
-            <span class="tag">${p.qtd ? "Salgado" : "Especial"}</span>
+            <span class="tag">${/brigadeiro|beijinho|pudim/i.test(p.nome) ? "Doce" : "Salgado"}</span>
           </div>
           <div class="card-body">
             <h3>${p.nome}</h3>
-            <p class="preco">${moeda.format(p.valor)}<small>Preço por ${p.medida}</small></p>
+            <p class="preco">${moeda.format(p.valor)}<small>PreÃ§o por ${p.medida}</small></p>
             <div class="controls">
               ${criarOpcoesQuantidade(p, i)}
               <button class="btn btn-add" onclick="add(${i})">Adicionar ao carrinho</button>
@@ -891,6 +959,28 @@
         </article>
       `).join("");
     }
+
+    let filtroAtual = "todos";
+    const buscaProduto = document.getElementById("buscaProduto");
+    function filtrarProdutos() {
+      const termo = buscaProduto.value.toLocaleLowerCase("pt-BR").trim();
+      let encontrados = 0;
+      area.querySelectorAll(".card").forEach((card, i) => {
+        const doce = /brigadeiro|beijinho|pudim/i.test(produtos[i].nome);
+        const categoriaCorreta = filtroAtual === "todos" || (filtroAtual === "doces" ? doce : !doce);
+        const visivel = categoriaCorreta && produtos[i].nome.toLocaleLowerCase("pt-BR").includes(termo);
+        card.hidden = !visivel;
+        if (visivel) encontrados++;
+      });
+      document.getElementById("buscaVazia").hidden = encontrados > 0;
+    }
+    buscaProduto.addEventListener("input", filtrarProdutos);
+    document.querySelectorAll(".category-chip").forEach(botao => botao.addEventListener("click", () => {
+      filtroAtual = botao.dataset.filter;
+      document.querySelectorAll(".category-chip").forEach(item => item.classList.toggle("active", item === botao));
+      filtrarProdutos();
+      document.getElementById("cardapio").scrollIntoView({ behavior: "smooth" });
+    }));
 
     function atualizarContador() {
       const totalItens = carrinho.reduce((acc, item) => acc + item.qtd, 0);
@@ -913,7 +1003,7 @@
 
     function mostrar() {
       if (!carrinho.length) {
-        lista.innerHTML = `<div class="lista-vazia"><h3 style="margin-top:0;">Seu carrinho está vazio</h3><p>Adicione produtos do cardápio para continuar.</p></div>`;
+        lista.innerHTML = `<div class="lista-vazia"><h3 style="margin-top:0;">Seu carrinho estÃ¡ vazio</h3><p>Adicione produtos do cardÃ¡pio para continuar.</p></div>`;
         totalEl.textContent = "0,00";
         return;
       }
@@ -926,7 +1016,7 @@
             <div class="item-info">
               <b>${p.nome}</b>
               <span>Quantidade: ${p.qtd}</span>
-              <span>Preço unitário: ${moeda.format(p.valor)}</span>
+              <span>PreÃ§o unitÃ¡rio: ${moeda.format(p.valor)}</span>
               <span>Subtotal: ${moeda.format(subtotal)}</span>
             </div>
             <div class="item-actions">
@@ -940,7 +1030,7 @@
     }
 
     function copiarPix() {
-      navigator.clipboard.writeText(CHAVE_PIX).then(() => mostrarToast(`Chave PIX copiada: ${CHAVE_PIX}`)).catch(() => mostrarToast("Não foi possível copiar automaticamente."));
+      navigator.clipboard.writeText(CHAVE_PIX).then(() => mostrarToast(`Chave PIX copiada: ${CHAVE_PIX}`)).catch(() => mostrarToast("NÃ£o foi possÃ­vel copiar automaticamente."));
     }
 
     function enviarWhats() {
@@ -950,16 +1040,16 @@
       if (!confirm("Confirmar pedido e enviar a lista para o WhatsApp?")) return;
 
       let total = 0;
-      let mensagem = `🌹 Rose Doces e Salgados\n`;
+      let mensagem = `ðŸŒ¹ Rose Doces e Salgados\n`;
       mensagem += `Cliente: ${nome}\n\n`;
       mensagem += `Pedido:\n`;
 
       carrinho.forEach((p) => {
         const subtotal = p.valor * p.qtd;
         total += subtotal;
-        mensagem += `• ${p.nome}\n`;
+        mensagem += `â€¢ ${p.nome}\n`;
         mensagem += `  Quantidade: ${p.qtd}\n`;
-        mensagem += `  Unitário: ${moeda.format(p.valor)}\n`;
+        mensagem += `  UnitÃ¡rio: ${moeda.format(p.valor)}\n`;
         mensagem += `  Subtotal: ${moeda.format(subtotal)}\n\n`;
       });
 
