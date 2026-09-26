@@ -682,6 +682,8 @@
     body { background: #f7f7f7; }
     .container { width: min(100% - 32px, var(--container)); }
     .hero { background: #fff; color: var(--text); padding: 22px 0; box-shadow: none; border-top: 6px solid var(--primary); border-bottom: 1px solid var(--border); }
+    .hero-banner { width: min(100% - 32px, var(--container)); margin: 0 auto 18px; border-radius: 16px; overflow: hidden; background: #fff1f2; }
+    .hero-banner img { display: block; width: 100%; height: clamp(180px, 25vw, 300px); object-fit: cover; object-position: center; }
     .hero-content { grid-template-columns: 90px 1fr auto; gap: 18px; }
     .logo-badge { width: 90px; height: 90px; border-radius: 18px; background: #fff1f2; border: 1px solid #f6d4da; font-size: 42px; backdrop-filter: none; }
     .eyebrow { font-size: 11px; color: var(--primary); letter-spacing: .12em; font-weight: 800; margin-bottom: 6px; }
@@ -719,6 +721,8 @@
     @media (max-width: 640px) {
       .container { width: min(100% - 24px, var(--container)); }
       .hero { padding: 16px 0; }
+      .hero-banner { width: min(100% - 24px, var(--container)); margin-bottom: 15px; border-radius: 12px; }
+      .hero-banner img { height: 190px; }
       .hero-content { grid-template-columns: 64px 1fr; gap: 12px; }
       .logo-badge { width: 64px; height: 64px; font-size: 30px; }
       .hero h1 { font-size: 21px; }
@@ -742,6 +746,9 @@
 </head>
 <body>
   <header class="hero">
+    <div class="hero-banner">
+      <img src="https://dl.dropbox.com/scl/fi/x5umx2ltkb979ayedmoyo/delivery.jpg?rlkey=fb4fmphprxze1f1b0lzy3gwt2&amp;st=jyq9qexe&amp;dl=0" alt="Rose Doces e Salgados: delivery" />
+    </div>
     <div class="container hero-content">
       <div class="logo-badge" aria-hidden="true">ðŸŒ¹</div>
       <div class="store-details">
