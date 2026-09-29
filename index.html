@@ -717,8 +717,22 @@
     .controls select { min-height: 41px; padding: 6px; border-radius: 9px; font-size: 13px; }
     .btn-add { width: auto; min-height: 41px; padding: 8px 12px; border-radius: 9px; font-size: 13px; }
     .empty-search { text-align: center; padding: 25px; color: var(--muted); }
+    .media-contact { display: grid; grid-template-columns: 1.25fr 1fr; gap: 16px; margin: 24px 0 34px; }
+    .media-contact > section { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 18px; }
+    .media-contact h2 { font-size: 21px; margin: 0 0 7px; }
+    .media-contact p { color: var(--muted); font-size: 14px; line-height: 1.45; margin: 0 0 14px; }
+    .video-box { border-radius: 12px; background: #fff1f2; overflow: hidden; aspect-ratio: 16 / 9; display: grid; place-items: center; }
+    .video-box video { width: 100%; height: 100%; object-fit: contain; background: #171717; }
+    .video-placeholder { text-align: center; color: var(--primary-dark); padding: 18px; }
+    .video-placeholder span { display: block; font-size: 40px; margin-bottom: 8px; }
+    .chat-form { display: grid; gap: 9px; }
+    .chat-form label { font-weight: 700; font-size: 14px; }
+    .chat-form textarea { width: 100%; min-height: 120px; resize: vertical; border: 1px solid #d8d8d8; border-radius: 12px; padding: 12px; font: inherit; }
+    .chat-form textarea:focus { outline: 2px solid #f0aab4; border-color: var(--primary); }
+    .chat-form button { background: #168b50; color: #fff; border-radius: 10px; }
     @media (max-width: 850px) { .produtos { grid-template-columns: 1fr; } }
     @media (max-width: 640px) {
+      .media-contact { grid-template-columns: 1fr; }
       .container { width: min(100% - 24px, var(--container)); }
       .hero { padding: 16px 0; }
       .hero-banner { width: min(100% - 24px, var(--container)); margin-bottom: 15px; border-radius: 12px; }
@@ -801,6 +815,29 @@
 
     <section class="produtos" id="produtos"></section>
     <p class="empty-search" id="buscaVazia" hidden>Nenhum produto encontrado. Tente outra busca.</p>
+    <div class="media-contact">
+      <section aria-labelledby="tituloVideo">
+        <h2 id="tituloVideo">ðŸŽ¬ VÃ­deo da Rose</h2>
+        <p>ConheÃ§a um pouco mais das nossas delÃ­cias.</p>
+        <div class="video-box">
+          <video id="videoRose" controls playsinline preload="metadata" hidden>Seu navegador nÃ£o consegue reproduzir este vÃ­deo.</video>
+          <div class="video-placeholder" id="videoPlaceholder"><span>â–¶</span>Em breve, nosso vÃ­deo por aqui!</div>
+        </div>
+      </section>
+      <section aria-labelledby="tituloMensagem">
+        <h2 id="tituloMensagem">ðŸ’¬ Fale com a Rose</h2>
+        <p>Escreva sua dÃºvida ou encomenda. Ao enviar, vocÃª abre a conversa no WhatsApp.</p>
+        <form class="chat-form" id="chatForm">
+          <label for="mensagemNome">Seu nome</label>
+          <input id="mensagemNome" name="nome" type="text" autocomplete="name" required placeholder="Digite seu nome" />
+          <label for="mensagemTelefone">Celular para contato</label>
+          <input id="mensagemTelefone" name="telefone" type="tel" autocomplete="tel" inputmode="tel" required maxlength="20" placeholder="(47) 99999-9999" />
+          <label for="mensagemTexto">Sua mensagem</label>
+          <textarea id="mensagemTexto" name="mensagem" required maxlength="1000" placeholder="OlÃ¡! Gostaria de saber sobre..."></textarea>
+          <button class="btn" type="submit">Enviar pelo WhatsApp</button>
+        </form>
+      </section>
+    </div>
   </main>
 
   <button class="cart-fab" onclick="abrirCarrinho()" aria-label="Abrir carrinho">
@@ -857,6 +894,8 @@
   <script>
     const CHAVE_PIX = "47999117547";
     const WHATSAPP_NUMERO = "5547999117547";
+    // Para mostrar seu vÃ­deo, coloque aqui um link direto para arquivo .mp4.
+    const VIDEO_URL = "";
     const moeda = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
 
     const galeriaImagens = [
@@ -881,16 +920,16 @@
     }));
 
     const produtos = [
-      { nome: "Coxinha", valor: 0.90, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtmGiJ6ZyI3fWSw_fWL4oEoW1FYQtymCbBARuLQ3ko6Q&s=10", qtd: true, medida: "cento / festa" },
+      { nome: "Coxinha", valor: 0.85, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtmGiJ6ZyI3fWSw_fWL4oEoW1FYQtymCbBARuLQ3ko6Q&s=10", qtd: true, medida: "cento / festa" },
       { nome: "Pastel", valor: 0.90, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs2p86_PaDbGypNkGgjZDWm1SBVj8fVPUOAUvENgP6hA&s=10", qtd: true, medida: "cento / festa" },
-      { nome: "Risoles de carne", valor: 0.90, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWLI3Pvsvt8ix09Lr9a3ztoCL9HELkMaOJ4bLVlm0wUA&s=10", qtd: true, medida: "cento / festa" },
-      { nome: "Risoles de presunto e queijo", valor: 0.90, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXlM0zeYdDOECGWKe7WFGGX6F6ZcQggdEmJXL5WcXTiQ&s=10", qtd: true, medida: "cento / festa" },
+      { nome: "Risoles de carne", valor: 0.85, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWLI3Pvsvt8ix09Lr9a3ztoCL9HELkMaOJ4bLVlm0wUA&s=10", qtd: true, medida: "cento / festa" },
+      { nome: "Risoles de presunto e queijo", valor: 0.85, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXlM0zeYdDOECGWKe7WFGGX6F6ZcQggdEmJXL5WcXTiQ&s=10", qtd: true, medida: "cento / festa" },
       { nome: "Bolinha de queijo", valor: 0.90, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsDts9ca3TEpc2zg5obgaaAky-RN5SwjH3m8K2ER_wZg&s=10", qtd: true, medida: "unidade" },
-      { nome: "Mini pizza", valor: 1.10, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBYPUoNBJ7x3vyiQBzTTo8PXEh_MCrPOWpeSqPMClGYA&s=10", qtd: true, medida: "cento / festa" },
-      { nome: "Enroladinho de salsicha", valor: 0.90, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbKkFSaU30pK2s1q0sWdR9oOIjBVJcrCxUU13wLmL6pQ&s=10", qtd: true, medida: "cento / festa" },
-      { nome: "Brigadeiro", valor: 0.90, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuvoc_0nML_XKVi0ZgnYz6Sn_vYuuLzFRn5W-8bLtEKHrfd0RsQTVuD1NRKg1UVJLSnR1kGQ4bupoVJiPDRUwuaRxoGgcSMXsDnqI87Uu5&s=10", qtd: true, medida: "cento / festa" },
-      { nome: "Beijinho", valor: 0.90, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-m9ovGhb-S8sZ5e908tQBFTAjdG7hQhyOHtqDeNvvRA&s=10", qtd: true, medida: "cento / festa" },
-      { nome: "Pudim grande", valor: 75, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSQlljghU-z-TPWmS4FAmVBGGtBqIAHc3DA4BsGGFtFQ&s=10", qtd: false, medida: "unidade" }
+      { nome: "Mini pizza", valor: 1.10, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0Qh8qXqZq7Qv2W5o9Qj3x2Q0yH5v6Z9X7M8o3Jv9x&s=10", qtd: true, medida: "cento / festa" },
+      { nome: "Enroladinho de salsicha", valor: 0.95, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7Y6X5W4V3U2T1S0R9Q8P7O6N5M4L3K2J1I0H9G8F7&s=10", qtd: true, medida: "cento / festa" },
+      { nome: "Brigadeiro gourmet", valor: 1.50, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6T5R4Q3P2O1N0M9L8K7J6H5G4F3E2D1C0B9A8Z7Y6&s=10", qtd: true, medida: "cento / festa" },
+      { nome: "Beijinho", valor: 1.40, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5W4E3R2T1Y0U9I8O7P6L5K4J3H2G1F0D9S8A7Q6W5&s=10", qtd: true, medida: "cento / festa" },
+      { nome: "Pudim grande", valor: 35, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1W0E9R8T7Y6U5I4O3P2L1K0J9H8G7F6D5S4A3Q2W1&s=10", qtd: false, medida: "unidade" }
     ];
 
     const carrinho = [];
@@ -1069,6 +1108,21 @@
     }
 
     carrinhoBox.addEventListener("click", (event) => { if (event.target === carrinhoBox) fecharCarrinho(); });
+    if (VIDEO_URL.trim()) {
+      const videoRose = document.getElementById("videoRose");
+      videoRose.src = VIDEO_URL.trim();
+      videoRose.hidden = false;
+      document.getElementById("videoPlaceholder").hidden = true;
+    }
+    document.getElementById("chatForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const nome = document.getElementById("mensagemNome").value.trim();
+      const telefone = document.getElementById("mensagemTelefone").value.trim();
+      const mensagem = document.getElementById("mensagemTexto").value.trim();
+      if (!nome || !telefone || !mensagem) return;
+      const texto = `OlÃ¡, Rose!\nNome: ${nome}\nCelular para contato: ${telefone}\n\nMensagem: ${mensagem}`;
+      window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(texto)}`, "_blank", "noopener,noreferrer");
+    });
     renderGaleria();
     renderProdutos();
     atualizarContador();
